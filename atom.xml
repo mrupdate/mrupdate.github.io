@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.set3rnal.xyz/"/>
-  <updated>2017-06-24T09:22:28.956Z</updated>
+  <updated>2017-10-22T08:36:57.881Z</updated>
   <id>http://www.set3rnal.xyz/</id>
   
   <author>
@@ -17,11 +17,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Windows TLS反调试</title>
+    <link href="http://www.set3rnal.xyz/2017/06/22/Windows%20TLS%E5%8F%8D%E8%B0%83%E8%AF%95/"/>
+    <id>http://www.set3rnal.xyz/2017/06/22/Windows TLS反调试/</id>
+    <published>2017-06-22T06:47:15.000Z</published>
+    <updated>2017-10-22T08:36:57.881Z</updated>
+    
+    <content type="html"><![CDATA[<p>#TLS简述</p><p>TLS(Thread Local Storage,线程局部存储)回调函数是是一种Windows为了解决一个进程中多个线程同时访问全局变量而提供的机制。TLS是各线程的独立的数据存储空间。使用TLS技术可在线程内部独立使用或修改进程的全局数据或静态数据。</p><p>TLS可以简单地由操作系统代为完成整个过程，也可以由用户自己编写控制信号量的函数。</p><p>每当程序创建/终止进程的线程时都会自动调用的函数，其调用会先于EP代码，所以TLS回调函数可以用于反调试。</p><p>#函数原型<br>当程序员选择自己编写控制信号量的函数时，系统会调用由程序员编写的初始化函数完成信号量的初始化，且该过程必须在EP执行之前完成。</p><p>PE头中，TLS也会占有一段空间</p><pre><code>IMAGE_NT_HEADERS.OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_TLS]</code></pre><p><img src="https://i.imgur.com/raFLcqe.png" alt=""></p><p>我们知道PE的DataDirectory具有以下结构</p><pre><code>typedef struct _IMAGE_DATA_DIRECTORY {DWORD VirtualAddress;DWORD Size;} IMAGE_DATA_DIRECTORY, *PIMAGE_DATA_DIRECTORY;</code></pre><p>得知 TLS的RVA是00170C 找到对应位置如下<br><img src="https://i.imgur.com/R84b6Co.png" alt=""><br>其中最重要的是AddressOfCallbacks，它指向含有TLS回调函数地址的数据。</p><p>TLS函数原型</p><pre><code>void NTAPI TLS_CALLBACK(    PVOID DllHandle,     DWORD Reason,     PVOID Reserved){}</code></pre><p>其中，第一个参数为加载地址，即句柄；第二个参数为调用TLS的原因，该原因主要有四个：</p><pre><code>#define DLL_PROCESS_ATTACH 1#define DLL_THREAD_ATTACH 2#define DLL_THREAD_DETACH 3#define DLL_PROCESS_ATTACH 0</code></pre><h1 id="TLS-Demo"><a href="#TLS-Demo" class="headerlink" title="TLS Demo"></a>TLS Demo</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(linker, <span class="meta-string">"/INCLUDE:__tls_used"</span>)</span></div><div class="line"><span class="comment">//通知链接器 PE文件要创建TLS目录</span></div><div class="line"><span class="function"><span class="keyword">void</span> NTAPI <span class="title">TLS_CALLBACK</span><span class="params">(PVOID DllHandle, DWORD Reason, PVOID Reserved)</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">if</span> (IsDebuggerPresent())</div><div class="line">&#123;</div><div class="line">MessageBoxA(<span class="literal">NULL</span>, <span class="string">"Debugger Detected!"</span>, <span class="string">"TLS Callback"</span>, MB_OK);</div><div class="line">ExitProcess(<span class="number">1</span>);</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">/*创建TLS段</span></div><div class="line">   .CRT$XLX的作用</div><div class="line">   CRT表示使用C Runtime 机制</div><div class="line">   X表示表示名随机</div><div class="line">   L表示TLS Callback section</div><div class="line">   X也可以换成B~Y任意一个字符</div><div class="line">*/</div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> data_seg(<span class="meta-string">".CRT$XLX"</span>)</span></div><div class="line"><span class="comment">//定义回调函数</span></div><div class="line">PIMAGE_TLS_CALLBACK pTLS_CALLBACKs[] = &#123; TLS_CALLBACK, <span class="number">0</span> &#125;;</div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> data_seg()</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">MessageBoxA(<span class="literal">NULL</span>, <span class="string">"Hello :)"</span>, <span class="string">"main()"</span>, MB_OK);</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>这时，使用OD打开运行就会弹框：<br><img src="https://i.imgur.com/lEcgZsa.png" alt=""></p><p>由于TLS在程序EP之前运行，所以想调试TLS函数的话 需要将OD断点设置为System breakpoint</p><p>Refer：<br><a href="https://le4f.net/post/post/tls-anti-debug" title="https://le4f.net/post/post/tls-anti-debug" target="_blank" rel="external">https://le4f.net/post/post/tls-anti-debug</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;#TLS简述&lt;/p&gt;
+&lt;p&gt;TLS(Thread Local Storage,线程局部存储)回调函数是是一种Windows为了解决一个进程中多个线程同时访问全局变量而提供的机制。TLS是各线程的独立的数据存储空间。使用TLS技术可在线程内部独立使用或修改进程的全局数据或静态
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Hello World</title>
-    <link href="http://www.set3rnal.xyz/2017/06/24/hello-world/"/>
-    <id>http://www.set3rnal.xyz/2017/06/24/hello-world/</id>
-    <published>2017-06-24T10:32:50.758Z</published>
-    <updated>2017-06-24T09:22:28.956Z</updated>
+    <link href="http://www.set3rnal.xyz/2016/11/22/hello-world/"/>
+    <id>http://www.set3rnal.xyz/2016/11/22/hello-world/</id>
+    <published>2016-11-22T06:47:15.000Z</published>
+    <updated>2017-10-22T08:38:16.129Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>]]></content>
     
