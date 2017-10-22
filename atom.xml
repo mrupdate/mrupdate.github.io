@@ -38,30 +38,22 @@
   </entry>
   
   <entry>
-    <title>123</title>
-    <link href="http://www.set3rnal.xyz/2017/06/24/123/"/>
-    <id>http://www.set3rnal.xyz/2017/06/24/123/</id>
-    <published>2017-06-24T09:44:01.000Z</published>
-    <updated>2017-06-24T09:44:01.174Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>Windows结构化异常处理SEH</title>
     <link href="http://www.set3rnal.xyz/2017/06/24/Windows%E7%BB%93%E6%9E%84%E5%8C%96%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86SEH/"/>
     <id>http://www.set3rnal.xyz/2017/06/24/Windows结构化异常处理SEH/</id>
     <published>2017-06-24T09:44:01.000Z</published>
-    <updated>2017-10-22T01:34:08.542Z</updated>
+    <updated>2017-10-22T01:56:55.377Z</updated>
+    
+    <content type="html"><![CDATA[<p>Windows异常处理可以使用两种方式：筛选器异常处理和SEH异常处理，<br>今天介绍下SEH异常处理<br><a id="more"></a><br>SEH(Structured Exception Handling)是Windows</p>]]></content>
     
     <summary type="html">
     
+      &lt;p&gt;Windows异常处理可以使用两种方式：筛选器异常处理和SEH异常处理，&lt;br&gt;今天介绍下SEH异常处理&lt;br&gt;
+    
     </summary>
     
+    
+      <category term="Windows" scheme="http://www.set3rnal.xyz/tags/Windows/"/>
     
   </entry>
   
