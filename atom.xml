@@ -42,7 +42,7 @@
     <link href="http://www.set3rnal.xyz/2017/06/24/Windows%E7%BB%93%E6%9E%84%E5%8C%96%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86SEH/"/>
     <id>http://www.set3rnal.xyz/2017/06/24/Windows结构化异常处理SEH/</id>
     <published>2017-06-24T09:44:01.000Z</published>
-    <updated>2017-10-22T02:41:26.665Z</updated>
+    <updated>2017-10-22T02:43:19.544Z</updated>
     
     <content type="html"><![CDATA[<p>Windows异常处理可以使用两种方式：筛选器异常处理和SEH异常处理，<br>今天介绍下SEH异常处理。<br><a id="more"></a><br>SEH(Structured Exception Handling)是Windows操作系统的一种系统机制，与程序语言无关。<br>在程序源代码中，通常使用<code>__try、__except、__finally</code>等关键字来具体实现。<br><em>注意windows异常处理关键字与C++中try catch等异常处理具有不同结构，不要混淆</em></p>]]></content>
     
