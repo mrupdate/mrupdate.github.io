@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.set3rnal.xyz/"/>
-  <updated>2017-10-28T09:43:32.883Z</updated>
+  <updated>2017-10-28T01:14:28.095Z</updated>
   <id>http://www.set3rnal.xyz/</id>
   
   <author>
@@ -15,30 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>IDEA动态调试smali</title>
-    <link href="http://www.set3rnal.xyz/2017/10/28/IDEA%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95smali/"/>
-    <id>http://www.set3rnal.xyz/2017/10/28/IDEA动态调试smali/</id>
-    <published>2017-10-28T08:50:25.000Z</published>
-    <updated>2017-10-28T09:43:32.883Z</updated>
-    
-    <content type="html"><![CDATA[<p>使用<code>IDEA + smalidea + baksmali</code>动态调试Apk，可以很方便的查看寄存器或者参数的值</p><h2 id="0x00-反编译Apk"><a href="#0x00-反编译Apk" class="headerlink" title="0x00 反编译Apk"></a>0x00 反编译Apk</h2><p>假设安卓端应用在没有加壳的情况下，使用baksmali反编译apk文件为smali文件。</p><p>下载地址<a href="https://bitbucket.org/JesusFreke/smali/downloads/" target="_blank" rel="external">https://bitbucket.org/JesusFreke/smali/downloads/</a></p><p>不知道为什么我的Java运行2.2*版本会报错，所以我使用baksmali2.0.2.jar</p><p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -jar baksmali-2.0.2.jar flag.apk -o Debug\src</div></pre></td></tr></table></figure></p><p>-o 参数表示 输出文件夹。</p><h2 id="0x01-配置IDEA"><a href="#0x01-配置IDEA" class="headerlink" title="0x01 配置IDEA"></a>0x01 配置IDEA</h2><p>首先需要安装smalidea插件，下载地址同上</p><p>点击<code>File-&gt;Setting-&gt;Plugins-&gt;Install plugin from disk...</code><br>然后找到你下载的jar文件就可以了，<br><img src="https://i.imgur.com/LHMxSDZ.png" alt=""><br>然后重启IDEA。<br>完成之后，打开IDEA<code>File-&gt;New-&gt;Project from Existing Sources</code><br>打开刚才反汇编的Debug文件夹，一路next即可，<br>然后</p><ol><li>在IDEA中右键src文件夹，<code>Mark Directory as-&gt;Sources root</code></li><li>点击<code>File -&gt; Project structure</code> 配置JDK</li><li>点击<code>Run -&gt; Edit Configurations</code> 选择Remote 接下来只需要更改端口为8700</li></ol><p><img src="https://i.imgur.com/nlBZl2s.png" alt=""></p><h2 id="配置APP运行环境"><a href="#配置APP运行环境" class="headerlink" title="配置APP运行环境"></a>配置APP运行环境</h2><p>这里可以选用Root掉的真机，亦可以使用模拟器<br>打开adb的DDMS（我的启动器是Android-sdk\tools目录下的monitor.bat）<br>此时模拟器打开要调试的APP<br><img src="https://i.imgur.com/3iG3Bxg.png" alt=""><br>运行<br><code>adb shell am start -D -n com.example.administrator.myapplication/com.example.administrator.flag.MainActivity</code></p><p>后面有关App的信息根据自己而定。此时查看模拟器界面已经是等待调试界面。</p><p>最后，在IDEA中设置好需要的断点。点击<code>Run-&gt;Debug &quot;Demo&quot;</code></p><p>在模拟器输入pass之后，就可以在IDEA中调试了。<br><img src="https://i.imgur.com/MEiOA4J.png" alt=""><br>用户名密码也显示出来了。</p><h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p>这种方法成功的前提是Apk具有Debug属性。如果没有<br>可借助<a href="https://ibotpeaches.github.io/Apktool/install/" target="_blank" rel="external">Apktool</a>工具</p><p>首先反编译</p><p><code>java -jar apktool_2.0.0.jar d -d flag.apk -o out/</code></p><p>进入out文件中，更改AndroidManifest.xml中的android:debuggable=”true”<br><img src="https://i.imgur.com/Bzj4CDz.png" alt=""></p><p>修改好之后编译<br><code>java -jar apktool_2.0.0.jar b -d out/ -o flag.apk</code><br>就可以了</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;使用&lt;code&gt;IDEA + smalidea + baksmali&lt;/code&gt;动态调试Apk，可以很方便的查看寄存器或者参数的值&lt;/p&gt;
-&lt;h2 id=&quot;0x00-反编译Apk&quot;&gt;&lt;a href=&quot;#0x00-反编译Apk&quot; class=&quot;headerlink&quot; tit
-      
-    
-    </summary>
-    
-    
-      <category term="Android" scheme="http://www.set3rnal.xyz/tags/Android/"/>
-    
-  </entry>
   
   <entry>
     <title>Windows异常处理机制</title>
@@ -86,6 +62,30 @@
     
     </summary>
     
+    
+  </entry>
+  
+  <entry>
+    <title>IDEA动态调试smali</title>
+    <link href="http://www.set3rnal.xyz/2017/03/22/IDEA%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95smali/"/>
+    <id>http://www.set3rnal.xyz/2017/03/22/IDEA动态调试smali/</id>
+    <published>2017-03-22T08:50:25.000Z</published>
+    <updated>2017-10-28T09:45:03.001Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用<code>IDEA + smalidea + baksmali</code>动态调试Apk，可以很方便的查看寄存器或者参数的值</p><h2 id="0x00-反编译Apk"><a href="#0x00-反编译Apk" class="headerlink" title="0x00 反编译Apk"></a>0x00 反编译Apk</h2><p>假设安卓端应用在没有加壳的情况下，使用baksmali反编译apk文件为smali文件。</p><p>下载地址<a href="https://bitbucket.org/JesusFreke/smali/downloads/" target="_blank" rel="external">https://bitbucket.org/JesusFreke/smali/downloads/</a></p><p>不知道为什么我的Java运行2.2*版本会报错，所以我使用baksmali2.0.2.jar</p><p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -jar baksmali-2.0.2.jar flag.apk -o Debug\src</div></pre></td></tr></table></figure></p><p>-o 参数表示 输出文件夹。</p><h2 id="0x01-配置IDEA"><a href="#0x01-配置IDEA" class="headerlink" title="0x01 配置IDEA"></a>0x01 配置IDEA</h2><p>首先需要安装smalidea插件，下载地址同上</p><p>点击<code>File-&gt;Setting-&gt;Plugins-&gt;Install plugin from disk...</code><br>然后找到你下载的jar文件就可以了，<br><img src="https://i.imgur.com/LHMxSDZ.png" alt=""><br>然后重启IDEA。<br>完成之后，打开IDEA<code>File-&gt;New-&gt;Project from Existing Sources</code><br>打开刚才反汇编的Debug文件夹，一路next即可，<br>然后</p><ol><li>在IDEA中右键src文件夹，<code>Mark Directory as-&gt;Sources root</code></li><li>点击<code>File -&gt; Project structure</code> 配置JDK</li><li>点击<code>Run -&gt; Edit Configurations</code> 选择Remote 接下来只需要更改端口为8700</li></ol><p><img src="https://i.imgur.com/nlBZl2s.png" alt=""></p><h2 id="配置APP运行环境"><a href="#配置APP运行环境" class="headerlink" title="配置APP运行环境"></a>配置APP运行环境</h2><p>这里可以选用Root掉的真机，亦可以使用模拟器<br>打开adb的DDMS（我的启动器是Android-sdk\tools目录下的monitor.bat）<br>此时模拟器打开要调试的APP<br><img src="https://i.imgur.com/3iG3Bxg.png" alt=""><br>运行<br><code>adb shell am start -D -n com.example.administrator.myapplication/com.example.administrator.flag.MainActivity</code></p><p>后面有关App的信息根据自己而定。此时查看模拟器界面已经是等待调试界面。</p><p>最后，在IDEA中设置好需要的断点。点击<code>Run-&gt;Debug &quot;Demo&quot;</code></p><p>在模拟器输入pass之后，就可以在IDEA中调试了。<br><img src="https://i.imgur.com/MEiOA4J.png" alt=""><br>用户名密码也显示出来了。</p><h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p>这种方法成功的前提是Apk具有Debug属性。如果没有<br>可借助<a href="https://ibotpeaches.github.io/Apktool/install/" target="_blank" rel="external">Apktool</a>工具</p><p>首先反编译</p><p><code>java -jar apktool_2.0.0.jar d -d flag.apk -o out/</code></p><p>进入out文件中，更改AndroidManifest.xml中的android:debuggable=”true”<br><img src="https://i.imgur.com/Bzj4CDz.png" alt=""></p><p>修改好之后编译<br><code>java -jar apktool_2.0.0.jar b -d out/ -o flag.apk</code><br>就可以了</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;使用&lt;code&gt;IDEA + smalidea + baksmali&lt;/code&gt;动态调试Apk，可以很方便的查看寄存器或者参数的值&lt;/p&gt;
+&lt;h2 id=&quot;0x00-反编译Apk&quot;&gt;&lt;a href=&quot;#0x00-反编译Apk&quot; class=&quot;headerlink&quot; tit
+      
+    
+    </summary>
+    
+    
+      <category term="Android" scheme="http://www.set3rnal.xyz/tags/Android/"/>
     
   </entry>
   
