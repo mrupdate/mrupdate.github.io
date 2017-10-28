@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="什么是异常操作系统中定义的异常为 1234567891011121314151617181920EXCEPTION_ACCESS_VIOLATION           (0xC0000005)  尝试读写没有读写属性的地址EXCEPTION_ARRAY_BOUNDS_EXCEEDED      (0xC000008C)  EXCEPTION_BREAKPOINT">
+    <meta name="description" content="什么是异常操作系统中定义的异常为    异常 值 描述     EXCEPTION_ACCESS_VIOLATION (0xC0000005) 尝试读写没有读写属性的地址   EXCEPTION_ARRAY_BOUNDS_EXCEEDED (0xC000008C) 数组访问越界   EXCEPTION_BREAKPOINT (0x80000003) 触发断点异常   EXCEPTION_DATAT">
 <meta name="keywords" content="Windows">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Windows异常处理机制">
 <meta property="og:url" content="http://www.set3rnal.xyz/2017/06/24/Windows结构化异常处理SEH/index.html">
 <meta property="og:site_name" content="Set3rnal&#39;s Blog">
-<meta property="og:description" content="什么是异常操作系统中定义的异常为 1234567891011121314151617181920EXCEPTION_ACCESS_VIOLATION           (0xC0000005)  尝试读写没有读写属性的地址EXCEPTION_ARRAY_BOUNDS_EXCEEDED      (0xC000008C)  EXCEPTION_BREAKPOINT">
+<meta property="og:description" content="什么是异常操作系统中定义的异常为    异常 值 描述     EXCEPTION_ACCESS_VIOLATION (0xC0000005) 尝试读写没有读写属性的地址   EXCEPTION_ARRAY_BOUNDS_EXCEEDED (0xC000008C) 数组访问越界   EXCEPTION_BREAKPOINT (0x80000003) 触发断点异常   EXCEPTION_DATAT">
 <meta property="og:image" content="https://i.imgur.com/me8pp1E.png">
 <meta property="og:image" content="https://i.imgur.com/kcUL1RP.png">
 <meta property="og:image" content="https://i.imgur.com/TQn48eF.png">
@@ -22,10 +22,10 @@
 <meta property="og:image" content="https://i.imgur.com/W8O7Pu3.png">
 <meta property="og:image" content="https://i.imgur.com/ArZFwdh.png">
 <meta property="og:image" content="https://i.imgur.com/OaBTOGo.png">
-<meta property="og:updated_time" content="2017-10-26T01:55:43.851Z">
+<meta property="og:updated_time" content="2017-10-28T00:58:56.607Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows异常处理机制">
-<meta name="twitter:description" content="什么是异常操作系统中定义的异常为 1234567891011121314151617181920EXCEPTION_ACCESS_VIOLATION           (0xC0000005)  尝试读写没有读写属性的地址EXCEPTION_ARRAY_BOUNDS_EXCEEDED      (0xC000008C)  EXCEPTION_BREAKPOINT">
+<meta name="twitter:description" content="什么是异常操作系统中定义的异常为    异常 值 描述     EXCEPTION_ACCESS_VIOLATION (0xC0000005) 尝试读写没有读写属性的地址   EXCEPTION_ARRAY_BOUNDS_EXCEEDED (0xC000008C) 数组访问越界   EXCEPTION_BREAKPOINT (0x80000003) 触发断点异常   EXCEPTION_DATAT">
 <meta name="twitter:image" content="https://i.imgur.com/me8pp1E.png">
     
     
@@ -146,7 +146,117 @@
 
   <div class="content" itemprop="articleBody">
     <h1 id="什么是异常"><a href="#什么是异常" class="headerlink" title="什么是异常"></a>什么是异常</h1><p>操作系统中定义的异常为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">EXCEPTION_ACCESS_VIOLATION           (0xC0000005)  尝试读写没有读写属性的地址</div><div class="line">EXCEPTION_ARRAY_BOUNDS_EXCEEDED      (0xC000008C)  </div><div class="line">EXCEPTION_BREAKPOINT                 (0x80000003)  断点异常</div><div class="line">EXCEPTION_DATATYPE_MISALIGNMENT      (0x80000002)</div><div class="line">EXCEPTION_FLT_DENORMAL_OPERAND       (0xC000008D)</div><div class="line">EXCEPTION_FLT_DIVIDE_BY_ZERO         (0xC000008E)</div><div class="line">EXCEPTION_FLT_INEXACT_RESULT         (0xC000008F)</div><div class="line">EXCEPTION_FLT_INVALID_OPERATION      (0xC0000090)</div><div class="line">EXCEPTION_FLT_OVERFLOW               (0xC0000091)</div><div class="line">EXCEPTION_FLT_STACK_CHECK            (0xC0000092)</div><div class="line">EXCEPTION_FLT_UNDERFLOW              (0xC0000093)</div><div class="line">EXCEPTION_ILLEGAL_INSTRUCTION        (0xC000001D)  遇到无效指令</div><div class="line">EXCEPTION_IN_PAGE_ERROR              (0xC0000006)  存取不存在的内存页面</div><div class="line">EXCEPTION_INT_DIVIDE_BY_ZERO         (0xC0000094)  除零错误</div><div class="line">EXCEPTION_INT_OVERFLOW               (0xC0000095)  </div><div class="line">EXCEPTION_INVALID_DISPOSITION        (0xC0000026)</div><div class="line">EXCEPTION_NONCONTINUABLE_EXCEPTION   (0xC0000025)</div><div class="line">EXCEPTION_PRIV_INSTRUCTION           (0xC0000096)</div><div class="line">EXCEPTION_SINGLE_STEP                (0x80000004)  单步中断</div><div class="line">EXCEPTION_STACK_OVERFLOW             (0xC00000FD)  堆栈溢出</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>异常</th>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EXCEPTION_ACCESS_VIOLATION</td>
+<td>(0xC0000005)</td>
+<td>尝试读写没有读写属性的地址</td>
+</tr>
+<tr>
+<td>EXCEPTION_ARRAY_BOUNDS_EXCEEDED</td>
+<td>(0xC000008C)</td>
+<td>数组访问越界</td>
+</tr>
+<tr>
+<td>EXCEPTION_BREAKPOINT</td>
+<td>(0x80000003)</td>
+<td>触发断点异常</td>
+</tr>
+<tr>
+<td>EXCEPTION_DATATYPE_MISALIGNMENT</td>
+<td>(0x80000002)</td>
+<td>读取一个未经对齐的数据时引发的异常</td>
+</tr>
+<tr>
+<td>EXCEPTION_FLT_DENORMAL_OPERAND</td>
+<td>(0xC000008D)</td>
+<td>浮点数操作的操作数的值太小以至于不能用标准格式表示出来</td>
+</tr>
+<tr>
+<td>EXCEPTION_FLT_DIVIDE_BY_ZERO</td>
+<td>(0xC000008E)</td>
+<td>浮点数除法的除数是零</td>
+</tr>
+<tr>
+<td>EXCEPTION_FLT_INEXACT_RESULT</td>
+<td>(0xC000008F)</td>
+<td>浮点数操作的结果不能精确表示成小数</td>
+</tr>
+<tr>
+<td>EXCEPTION_FLT_INVALID_OPERATION</td>
+<td>(0xC0000090)</td>
+<td>不包括在这个表内的其它浮点数异常</td>
+</tr>
+<tr>
+<td>EXCEPTION_FLT_OVERFLOW</td>
+<td>(0xC0000091)</td>
+<td>浮点数的指数超过所能表示的最大值</td>
+</tr>
+<tr>
+<td>EXCEPTION_FLT_STACK_CHECK</td>
+<td>(0xC0000092)</td>
+<td>浮点数运算时栈发生溢出或下溢</td>
+</tr>
+<tr>
+<td>EXCEPTION_FLT_UNDERFLOW</td>
+<td>(0xC0000093)</td>
+<td>浮点数的指数小于所能表示的最小值</td>
+</tr>
+<tr>
+<td>EXCEPTION_ILLEGAL_INSTRUCTION</td>
+<td>(0xC000001D)</td>
+<td>遇到无效指令</td>
+</tr>
+<tr>
+<td>EXCEPTION_IN_PAGE_ERROR</td>
+<td>(0xC0000006)</td>
+<td>存取不存在的内存页面</td>
+</tr>
+<tr>
+<td>EXCEPTION_INT_DIVIDE_BY_ZERO</td>
+<td>(0xC0000094)</td>
+<td>整数除零错误</td>
+</tr>
+<tr>
+<td>EXCEPTION_INT_OVERFLOW</td>
+<td>(0xC0000095)</td>
+<td>整数操作的结果溢出</td>
+</tr>
+<tr>
+<td>EXCEPTION_INVALID_DISPOSITION</td>
+<td>(0xC0000026)</td>
+<td>异常处理器返回无效的处理</td>
+</tr>
+<tr>
+<td>EXCEPTION_NONCONTINUABLE_EXCEPTION</td>
+<td>(0xC0000025)</td>
+<td>发生一个不可继续执行的异常时，如果程序继续执行，则会引发该异常。</td>
+</tr>
+<tr>
+<td>EXCEPTION_PRIV_INSTRUCTION</td>
+<td>(0xC0000096)</td>
+<td>程序企图执行一条当前CPU模式不允许的指令</td>
+</tr>
+<tr>
+<td>EXCEPTION_SINGLE_STEP</td>
+<td>(0x80000004)</td>
+<td>单步中断</td>
+</tr>
+<tr>
+<td>EXCEPTION_STACK_OVERFLOW</td>
+<td>(0xC00000FD)</td>
+<td>堆栈溢出</td>
+</tr>
+</tbody>
+</table>
 <p>根据异常作用或产生的后果可以将异常分为错误（重新执行产生异常的指令如页面错误）、陷阱（执行下一条指令如调试断点）和终止（进程终止或则系统崩溃）。</p>
 <h1 id="Windows异常处理"><a href="#Windows异常处理" class="headerlink" title="Windows异常处理"></a>Windows异常处理</h1><p>Windows异常处理可以使用两种方式：筛选器异常处理和SEH结构化异常处理，</p>
 <p>SEH(Structured Exception Handling)是Windows操作系统的一种系统机制，与程序语言无关。<br>SEH也是以回调函数的方式提供的；且其是基于线程的，只能处理本身线程的异常，当线程初始化时，会向栈中安装一个SEH即默认的异常处理函数。<br>在程序源代码中，通常使用<code>__try、__except、__finally</code>等关键字来具体实现。SEH实际上就是windows系统在终结应用程序之前，给程序的一个执行其预设定的回调函数的机会。<br><em>注意windows异常处理关键字与C++中try catch等异常处理具有不同结构，不要混淆</em></p>
