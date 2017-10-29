@@ -15,7 +15,7 @@
 <meta property="og:description" content="Dword Shoot漏洞通常出现在双向链表删除节点的时候。比如堆操作free中的unlink双向链表在删除节点的时候，如果其中指向前一个和指向后一个节点的两个指针被修改，就会触发漏洞。首先定义一个结构体作为fd bk节点123456struct node&amp;#123;    char data[16];    struct node *fd;			//指向前一个节点    struct node">
 <meta property="og:image" content="https://i.imgur.com/jpF2LbP.png">
 <meta property="og:image" content="https://i.imgur.com/8Lu0UJE.png">
-<meta property="og:updated_time" content="2017-10-29T08:34:55.756Z">
+<meta property="og:updated_time" content="2017-10-29T08:54:55.878Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dword Shoot">
 <meta name="twitter:description" content="Dword Shoot漏洞通常出现在双向链表删除节点的时候。比如堆操作free中的unlink双向链表在删除节点的时候，如果其中指向前一个和指向后一个节点的两个指针被修改，就会触发漏洞。首先定义一个结构体作为fd bk节点123456struct node&amp;#123;    char data[16];    struct node *fd;			//指向前一个节点    struct node">
@@ -157,8 +157,9 @@ bk=shellcode_addr
 <li>FD=P-&gt;fd  FD指向了free@got-0x4</li>
 <li>BK=P-&gt;bk  BK指向了shellcode地址！</li>
 <li>FD-&gt;bk = BK  也就是free@got-0x14+16(data区)+4(fd)=shellcode地址，也就是free@got被指向了shellcode的地址，</li>
-<li>BK-&gt;fd = FD  这一步也要执行，所以必须要求shellcode的地址具有可写的属性，才能保证这一步的正确执行。<br><img src="https://i.imgur.com/8Lu0UJE.png" alt=""><br>这样再执行free函数的时候就会跳转到shellcode</li>
+<li>BK-&gt;fd = FD  这一步也要执行，所以必须要求shellcode的地址具有可写的属性，才能保证这一步的正确执行。</li>
 </ol>
+<p><img src="https://i.imgur.com/8Lu0UJE.png" alt=""><br>这样再执行free函数的时候就会跳转到shellcode</p>
 
   </div>
 </article>
