@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[Windows异常处理机制]]></title>
       <url>/2017/06/24/Windows%E7%BB%93%E6%9E%84%E5%8C%96%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86SEH/</url>
-      <content type="html"><![CDATA[<a id="more"></a>
+      <content type="html"><![CDATA[<p>根据异常作用或产生的后果可以将异常分为错误（重新执行产生异常的指令如页面错误）、陷阱（执行下一条指令如调试断点）和终止（进程终止或则系统崩溃）。<br>Windows异常处理可以使用两种方式：筛选器异常处理和SEH结构化异常处理，<br><a id="more"></a></p>
 <h1 id="什么是异常"><a href="#什么是异常" class="headerlink" title="什么是异常"></a>什么是异常</h1><p>操作系统中定义的异常为</p>
 <table>
 <thead>
@@ -118,7 +118,6 @@
 </tr>
 </tbody>
 </table>
-<p>根据异常作用或产生的后果可以将异常分为错误（重新执行产生异常的指令如页面错误）、陷阱（执行下一条指令如调试断点）和终止（进程终止或则系统崩溃）。</p>
 <h1 id="Windows异常处理"><a href="#Windows异常处理" class="headerlink" title="Windows异常处理"></a>Windows异常处理</h1><p>Windows异常处理可以使用两种方式：筛选器异常处理和SEH结构化异常处理，</p>
 <p>SEH(Structured Exception Handling)是Windows操作系统的一种系统机制，与程序语言无关。<br>SEH也是以回调函数的方式提供的；且其是基于线程的，只能处理本身线程的异常，当线程初始化时，会向栈中安装一个SEH即默认的异常处理函数。<br>在程序源代码中，通常使用<code>__try、__except、__finally</code>等关键字来具体实现。SEH实际上就是windows系统在终结应用程序之前，给程序的一个执行其预设定的回调函数的机会。<br><em>注意windows异常处理关键字与C++中try catch等异常处理具有不同结构，不要混淆</em></p>
 <p>SEH以链的形式存在，一个异常处理器未处理异常，就会被传递到下一个异常处理器，Windows在SEH链的末尾有一个默认异常处理机制，来保证程序一定被处理，如果使用默认的处理机制，Win7下就会报“XXX已停止工作，Windows联机检查解决方案…”</p>
