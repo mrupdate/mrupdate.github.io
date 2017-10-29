@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="0x07 input ssh input2@pwnable.kr -p2222 (pw:guest)代码如下：  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#inc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pwnable.kr Toddler&#39;s Bottle Writeup">
+<meta property="og:url" content="http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler's Bottle Writeup/index.html">
+<meta property="og:site_name" content="0xsisrazz">
+<meta property="og:description" content="0x07 input ssh input2@pwnable.kr -p2222 (pw:guest)代码如下：  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#inc">
+<meta property="og:updated_time" content="2017-10-29T08:21:07.761Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pwnable.kr Toddler&#39;s Bottle Writeup">
+<meta name="twitter:description" content="0x07 input ssh input2@pwnable.kr -p2222 (pw:guest)代码如下：  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#inc">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Pwnable.kr Toddler&#39;s Bottle Writeup</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/atom.xml">Rss</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/03/22/IDEA动态调试smali/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/02/14/Dword Shoot/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&text=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&title=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&is_video=false&description=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Pwnable.kr Toddler&#39;s Bottle Writeup&body=Check out this article: http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&title=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&title=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&title=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&title=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&name=Pwnable.kr Toddler&#39;s Bottle Writeup&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x07-input"><span class="toc-number">1.</span> <span class="toc-text">0x07 input</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Pwnable.kr Toddler&#39;s Bottle Writeup
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">0xsisrazz</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-02-24T02:59:27.000Z" itemprop="datePublished">2017-02-24</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="0x07-input"><a href="#0x07-input" class="headerlink" title="0x07 input"></a>0x07 input</h2><blockquote>
+<p>ssh input2@pwnable.kr -p2222 (pw:guest)<br>代码如下：</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/socket.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;arpa/inet.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[], <span class="keyword">char</span>* envp[])</span></span>&#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Welcome to pwnable.kr\n"</span>);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Let's see if you know how to give input to program\n"</span>);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Just give me correct inputs then you will get the flag :)\n"</span>);</div><div class="line">        <span class="comment">// argv</span></div><div class="line">        <span class="keyword">if</span>(argc != <span class="number">100</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">strcmp</span>(argv[<span class="string">'A'</span>],<span class="string">"\x00"</span>))</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">strcmp</span>(argv[<span class="string">'B'</span>],<span class="string">"\x20\x0a\x0d"</span>))</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Stage 1 clear!\n"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// stdio</span></div><div class="line">        <span class="keyword">char</span> buf[<span class="number">4</span>];</div><div class="line">        read(<span class="number">0</span>, buf, <span class="number">4</span>);</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">memcmp</span>(buf, <span class="string">"\x00\x0a\x00\xff"</span>, <span class="number">4</span>))</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        read(<span class="number">2</span>, buf, <span class="number">4</span>);</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">memcmp</span>(buf, <span class="string">"\x00\x0a\x02\xff"</span>, <span class="number">4</span>)) </div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Stage 2 clear!\n"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// env</span></div><div class="line">        <span class="keyword">if</span>(<span class="built_in">strcmp</span>(<span class="string">"\xca\xfe\xba\xbe"</span>, getenv(<span class="string">"\xde\xad\xbe\xef"</span>)))</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Stage 3 clear!\n"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// file</span></div><div class="line">        FILE* fp = fopen(<span class="string">"\x0a"</span>, <span class="string">"r"</span>);</div><div class="line">        <span class="keyword">if</span>(!fp) </div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>( fread(buf, <span class="number">4</span>, <span class="number">1</span>, fp)!=<span class="number">1</span> )</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>( <span class="built_in">memcmp</span>(buf, <span class="string">"\x00\x00\x00\x00"</span>, <span class="number">4</span>) )</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        fclose(fp);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Stage 4 clear!\n"</span>);</div><div class="line">        <span class="comment">// network</span></div><div class="line">        <span class="keyword">int</span> sd, cd;</div><div class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">saddr</span>, <span class="title">caddr</span>;</span></div><div class="line">        sd = socket(AF_INET, SOCK_STREAM, <span class="number">0</span>);</div><div class="line">        <span class="keyword">if</span>(sd == <span class="number">-1</span>)&#123;</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"socket error, tell admin\n"</span>);</div><div class="line">                <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        saddr.sin_family = AF_INET;</div><div class="line">        saddr.sin_addr.s_addr = INADDR_ANY;</div><div class="line">        saddr.sin_port = htons( atoi(argv[<span class="string">'C'</span>]) );</div><div class="line">        <span class="keyword">if</span>(bind(sd, (struct sockaddr*)&amp;saddr, <span class="keyword">sizeof</span>(saddr)) &lt; <span class="number">0</span>)&#123;</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"bind error, use another port\n"</span>);</div><div class="line">                <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        listen(sd, <span class="number">1</span>);</div><div class="line">        <span class="keyword">int</span> c = <span class="keyword">sizeof</span>(struct sockaddr_in);</div><div class="line">        cd = accept(sd, (struct sockaddr *)&amp;caddr, (<span class="keyword">socklen_t</span>*)&amp;c);</div><div class="line">        <span class="keyword">if</span>(cd &lt; <span class="number">0</span>)&#123;</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"accept error, tell admin\n"</span>);</div><div class="line">                <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>( recv(cd, buf, <span class="number">4</span>, <span class="number">0</span>) != <span class="number">4</span> ) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">memcmp</span>(buf, <span class="string">"\xde\xad\xbe\xef"</span>, <span class="number">4</span>)) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Stage 5 clear!\n"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// here's your flag</span></div><div class="line">        system(<span class="string">"/bin/cat flag"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>首先 第一步的</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(argc != <span class="number">100</span>)</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"><span class="keyword">if</span>(<span class="built_in">strcmp</span>(argv[<span class="string">'A'</span>],<span class="string">"\x00"</span>))</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"><span class="keyword">if</span>(<span class="built_in">strcmp</span>(argv[<span class="string">'B'</span>],<span class="string">"\x20\x0a\x0d"</span>))</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"><span class="built_in">printf</span>(<span class="string">"Stage 1 clear!\n"</span>);</div></pre></td></tr></table></figure>
+<p>由于不可打印字符的存在，可利用C的execve()函数，将参数传递给程序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/socket.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">   <span class="keyword">char</span>* argv[<span class="number">101</span>] = &#123;[<span class="number">0</span> ... <span class="number">99</span>] = <span class="string">"A"</span>&#125;;</div><div class="line">   argv[<span class="string">'A'</span>] = <span class="string">"\x00"</span>;</div><div class="line">   argv[<span class="string">'B'</span>] = <span class="string">"\x20\x0a\x0d"</span>;</div><div class="line">   execve(<span class="string">"/home/input/input"</span>, argv, <span class="literal">NULL</span>);</div><div class="line"></div><div class="line">   <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>编译运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">input@ubuntu:/tmp$ ./bypass_input</div><div class="line">Welcome to pwnable.kr</div><div class="line">Let<span class="string">'s see if you know how to give input to program</span></div><div class="line">Just give me correct inputs then you will get the flag :)</div><div class="line">Stage 1 clear!</div></pre></td></tr></table></figure>
+<p>第二步标准输入stdin，可以用到unix的亲子进程间通信pipe</p>
+<p>pipe()的原型：<br><code>#include &lt;unistd.h&gt;
+int pipe(int fd[2]);</code><br>fd[0]用于读出数据，读的时候必须关闭写入端（fd[1]）<br>fd[1]用于写入数据，写的时候必须关闭读取端（fd[0]）</p>
+<p>第三步<br>直接定义环境变量即可</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span>* env[<span class="number">2</span>] = &#123;<span class="string">"\xde\xad\xbe\xef=\xca\xfe\xba\xbe"</span>&#125;;</div></pre></td></tr></table></figure>
+<p>第四步<br>文件操作<br>相应payload如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">FILE* fp = fopen(<span class="string">"\x0a"</span>, <span class="string">"wb"</span>);</div><div class="line"><span class="keyword">if</span>(!fp) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"file create error!\n"</span>);</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">&#125;</div><div class="line">fwrite(<span class="string">"\x00\x00\x00\x00"</span>, <span class="number">4</span>, <span class="number">1</span>, fp);</div><div class="line">fclose(fp);</div></pre></td></tr></table></figure></p>
+<p>第五步</p>
+<p>直接利用 python 程序向设置好的监听端口argv[c] 发送对应字符 \xde\xad\xbe\xef</p>
+<p>最终payload</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/socket.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;arpa/inet.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">char</span>* argv[<span class="number">101</span>] = &#123;[<span class="number">0</span> ... <span class="number">99</span>] = <span class="string">"A"</span>&#125;;</div><div class="line">    argv[<span class="string">'A'</span>] = <span class="string">"\x00"</span>;</div><div class="line">    argv[<span class="string">'B'</span>] = <span class="string">"\x20\x0a\x0d"</span>;</div><div class="line">    argv[<span class="string">'C'</span>] = <span class="string">"5555"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">char</span>* envp[<span class="number">2</span>] = &#123;<span class="string">"\xde\xad\xbe\xef=\xca\xfe\xba\xbe"</span>&#125;;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> pipe1[<span class="number">2</span>], pipe2[<span class="number">2</span>];</div><div class="line">    <span class="keyword">if</span>(pipe(pipe1) &lt; <span class="number">0</span> || pipe(pipe2) &lt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"pipe error!\n"</span>);</div><div class="line">        <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    FILE* fp = fopen(<span class="string">"\x0a"</span>, <span class="string">"wb"</span>);</div><div class="line">    <span class="keyword">if</span>(!fp) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"file create error!\n"</span>);</div><div class="line">        <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">    &#125;</div><div class="line">    fwrite(<span class="string">"\x00\x00\x00\x00"</span>, <span class="number">4</span>, <span class="number">1</span>, fp);</div><div class="line">    fclose(fp);</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(fork() == <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Parent processing is here...\n"</span>);</div><div class="line">        dup2(pipe1[<span class="number">0</span>], <span class="number">0</span>);</div><div class="line">        close(pipe1[<span class="number">1</span>]);</div><div class="line">        dup2(pipe2[<span class="number">0</span>], <span class="number">2</span>);</div><div class="line">        close(pipe2[<span class="number">1</span>]);</div><div class="line">        execve(<span class="string">"/home/input2/input"</span>, argv, envp);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Parent processing is here...\n"</span>);</div><div class="line">        write(pipe1[<span class="number">1</span>], <span class="string">"\x00\x0a\x00\xff"</span>, <span class="number">4</span>);</div><div class="line">        write(pipe2[<span class="number">1</span>], <span class="string">"\x00\x0a\x02\xff"</span>, <span class="number">4</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>还要将第五步要输入的字符串输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python -c &quot;print &apos;\xde\xad\xbe\xef&apos;&quot; | nc 127.0.0.1 5555</div></pre></td></tr></table></figure></p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/atom.xml">Rss</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x07-input"><span class="toc-number">1.</span> <span class="toc-text">0x07 input</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&text=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&title=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&is_video=false&description=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Pwnable.kr Toddler&#39;s Bottle Writeup&body=Check out this article: http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&title=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&title=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&title=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&title=Pwnable.kr Toddler&#39;s Bottle Writeup"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/&name=Pwnable.kr Toddler&#39;s Bottle Writeup&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 Set3rnal
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/atom.xml">Rss</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
