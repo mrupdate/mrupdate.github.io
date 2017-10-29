@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="pwn," />
 
 
 
@@ -79,16 +79,17 @@
 
 
 
-<meta name="description" content="0x07 input ssh input2@pwnable.kr -p2222 (pw:guest)代码如下：  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#inc">
+<meta name="description" content="0x07 input ssh input2@pwnable.kr -p2222 (pw:guest)代码如下：  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#in">
+<meta name="keywords" content="pwn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pwnable.kr Toddler&#39;s Bottle Writeup">
 <meta property="og:url" content="http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler's Bottle Writeup/index.html">
 <meta property="og:site_name" content="0xsisrazz">
-<meta property="og:description" content="0x07 input ssh input2@pwnable.kr -p2222 (pw:guest)代码如下：  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#inc">
-<meta property="og:updated_time" content="2017-10-29T08:21:07.761Z">
+<meta property="og:description" content="0x07 input ssh input2@pwnable.kr -p2222 (pw:guest)代码如下：  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#in">
+<meta property="og:updated_time" content="2017-10-29T13:22:15.080Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pwnable.kr Toddler&#39;s Bottle Writeup">
-<meta name="twitter:description" content="0x07 input ssh input2@pwnable.kr -p2222 (pw:guest)代码如下：  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#inc">
+<meta name="twitter:description" content="0x07 input ssh input2@pwnable.kr -p2222 (pw:guest)代码如下：  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#in">
 
 
 
@@ -98,7 +99,7 @@
     root: '/',
     scheme: 'Gemini',
     version: '5.1.3',
-    sidebar: {"position":"right","display":"hide","offset":20,"b2t":true,"scrollpercent":true,"onmobile":false},
+    sidebar: {"position":"right","display":"hide","offset":20,"b2t":true,"scrollpercent":"flase","onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -319,7 +320,8 @@
       
 
       
-        <h2 id="0x07-input"><a href="#0x07-input" class="headerlink" title="0x07 input"></a>0x07 input</h2><blockquote>
+        <a id="more"></a>
+<h2 id="0x07-input"><a href="#0x07-input" class="headerlink" title="0x07 input"></a>0x07 input</h2><blockquote>
 <p>ssh input2@pwnable.kr -p2222 (pw:guest)<br>代码如下：</p>
 </blockquote>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/socket.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;arpa/inet.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[], <span class="keyword">char</span>* envp[])</span></span>&#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Welcome to pwnable.kr\n"</span>);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Let's see if you know how to give input to program\n"</span>);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Just give me correct inputs then you will get the flag :)\n"</span>);</div><div class="line">        <span class="comment">// argv</span></div><div class="line">        <span class="keyword">if</span>(argc != <span class="number">100</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">strcmp</span>(argv[<span class="string">'A'</span>],<span class="string">"\x00"</span>))</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">strcmp</span>(argv[<span class="string">'B'</span>],<span class="string">"\x20\x0a\x0d"</span>))</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Stage 1 clear!\n"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// stdio</span></div><div class="line">        <span class="keyword">char</span> buf[<span class="number">4</span>];</div><div class="line">        read(<span class="number">0</span>, buf, <span class="number">4</span>);</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">memcmp</span>(buf, <span class="string">"\x00\x0a\x00\xff"</span>, <span class="number">4</span>))</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        read(<span class="number">2</span>, buf, <span class="number">4</span>);</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">memcmp</span>(buf, <span class="string">"\x00\x0a\x02\xff"</span>, <span class="number">4</span>)) </div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Stage 2 clear!\n"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// env</span></div><div class="line">        <span class="keyword">if</span>(<span class="built_in">strcmp</span>(<span class="string">"\xca\xfe\xba\xbe"</span>, getenv(<span class="string">"\xde\xad\xbe\xef"</span>)))</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Stage 3 clear!\n"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// file</span></div><div class="line">        FILE* fp = fopen(<span class="string">"\x0a"</span>, <span class="string">"r"</span>);</div><div class="line">        <span class="keyword">if</span>(!fp) </div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>( fread(buf, <span class="number">4</span>, <span class="number">1</span>, fp)!=<span class="number">1</span> )</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>( <span class="built_in">memcmp</span>(buf, <span class="string">"\x00\x00\x00\x00"</span>, <span class="number">4</span>) )</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        fclose(fp);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Stage 4 clear!\n"</span>);</div><div class="line">        <span class="comment">// network</span></div><div class="line">        <span class="keyword">int</span> sd, cd;</div><div class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">saddr</span>, <span class="title">caddr</span>;</span></div><div class="line">        sd = socket(AF_INET, SOCK_STREAM, <span class="number">0</span>);</div><div class="line">        <span class="keyword">if</span>(sd == <span class="number">-1</span>)&#123;</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"socket error, tell admin\n"</span>);</div><div class="line">                <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        saddr.sin_family = AF_INET;</div><div class="line">        saddr.sin_addr.s_addr = INADDR_ANY;</div><div class="line">        saddr.sin_port = htons( atoi(argv[<span class="string">'C'</span>]) );</div><div class="line">        <span class="keyword">if</span>(bind(sd, (struct sockaddr*)&amp;saddr, <span class="keyword">sizeof</span>(saddr)) &lt; <span class="number">0</span>)&#123;</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"bind error, use another port\n"</span>);</div><div class="line">                <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        listen(sd, <span class="number">1</span>);</div><div class="line">        <span class="keyword">int</span> c = <span class="keyword">sizeof</span>(struct sockaddr_in);</div><div class="line">        cd = accept(sd, (struct sockaddr *)&amp;caddr, (<span class="keyword">socklen_t</span>*)&amp;c);</div><div class="line">        <span class="keyword">if</span>(cd &lt; <span class="number">0</span>)&#123;</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"accept error, tell admin\n"</span>);</div><div class="line">                <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>( recv(cd, buf, <span class="number">4</span>, <span class="number">0</span>) != <span class="number">4</span> ) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">memcmp</span>(buf, <span class="string">"\xde\xad\xbe\xef"</span>, <span class="number">4</span>)) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Stage 5 clear!\n"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// here's your flag</span></div><div class="line">        system(<span class="string">"/bin/cat flag"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -354,6 +356,12 @@ int pipe(int fd[2]);</code><br>fd[0]用于读出数据，读的时候必须关�
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pwn/" rel="tag"># pwn</a>
+          
+        </div>
       
 
       
@@ -476,7 +484,7 @@ int pipe(int fd[2]);</code><br>fd[0]用于读出数据，读的时候必须关�
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
@@ -545,9 +553,9 @@ int pipe(int fd[2]);</code><br>fd[0]用于读出数据，读的时候必须关�
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heartbeat"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Set3rnal</span>
 

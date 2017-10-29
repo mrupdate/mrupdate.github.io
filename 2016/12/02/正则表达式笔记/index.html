@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="正则表达式基本语法：界定符 原子 量词 边界控制 模式单元 0x01界定符表示正则表达式的开始和结束 常见界定符 / /，# #，{ }  其中/ /最常用正则表达式使用\转义 0x02原子可见原子标点；英文字母；汉字；特殊符号等Unicode编码表中可见的字符 不可见原子换行符\n;回车\r;空格等不可见字符 元字符|  :匹配多个选择 [] :匹配括号里的任意一个原子 [abc]匹配a或者b或">
+<meta name="description" content="正则表达式基本语法：界定符 原子 量词 边界控制 模式单元 0x01界定符表示正则表达式的开始和结束 常见界定符 / /，# #，{ }  其中/ /最常用正则表达式使用\转义 0x02原子可见原子标点；英文字母；汉字；特殊符号等Unicode编码表中可见的字符 不可见原子换行符\n;回车\r;空格等不可见字符 元字符|  :匹配多个选择 [] :匹配括号里的任意一个原子 [abc]匹配a或者b">
 <meta name="keywords" content="正则表达式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="正则表达式笔记">
 <meta property="og:url" content="http://www.set3rnal.xyz/2016/12/02/正则表达式笔记/index.html">
 <meta property="og:site_name" content="0xsisrazz">
-<meta property="og:description" content="正则表达式基本语法：界定符 原子 量词 边界控制 模式单元 0x01界定符表示正则表达式的开始和结束 常见界定符 / /，# #，{ }  其中/ /最常用正则表达式使用\转义 0x02原子可见原子标点；英文字母；汉字；特殊符号等Unicode编码表中可见的字符 不可见原子换行符\n;回车\r;空格等不可见字符 元字符|  :匹配多个选择 [] :匹配括号里的任意一个原子 [abc]匹配a或者b或">
-<meta property="og:updated_time" content="2017-10-29T06:56:11.026Z">
+<meta property="og:description" content="正则表达式基本语法：界定符 原子 量词 边界控制 模式单元 0x01界定符表示正则表达式的开始和结束 常见界定符 / /，# #，{ }  其中/ /最常用正则表达式使用\转义 0x02原子可见原子标点；英文字母；汉字；特殊符号等Unicode编码表中可见的字符 不可见原子换行符\n;回车\r;空格等不可见字符 元字符|  :匹配多个选择 [] :匹配括号里的任意一个原子 [abc]匹配a或者b">
+<meta property="og:updated_time" content="2017-10-29T13:22:45.088Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式笔记">
-<meta name="twitter:description" content="正则表达式基本语法：界定符 原子 量词 边界控制 模式单元 0x01界定符表示正则表达式的开始和结束 常见界定符 / /，# #，{ }  其中/ /最常用正则表达式使用\转义 0x02原子可见原子标点；英文字母；汉字；特殊符号等Unicode编码表中可见的字符 不可见原子换行符\n;回车\r;空格等不可见字符 元字符|  :匹配多个选择 [] :匹配括号里的任意一个原子 [abc]匹配a或者b或">
+<meta name="twitter:description" content="正则表达式基本语法：界定符 原子 量词 边界控制 模式单元 0x01界定符表示正则表达式的开始和结束 常见界定符 / /，# #，{ }  其中/ /最常用正则表达式使用\转义 0x02原子可见原子标点；英文字母；汉字；特殊符号等Unicode编码表中可见的字符 不可见原子换行符\n;回车\r;空格等不可见字符 元字符|  :匹配多个选择 [] :匹配括号里的任意一个原子 [abc]匹配a或者b">
 
 
 
@@ -99,7 +99,7 @@
     root: '/',
     scheme: 'Gemini',
     version: '5.1.3',
-    sidebar: {"position":"right","display":"hide","offset":20,"b2t":true,"scrollpercent":true,"onmobile":false},
+    sidebar: {"position":"right","display":"hide","offset":20,"b2t":true,"scrollpercent":"flase","onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -320,7 +320,8 @@
       
 
       
-        <h2 id="正则表达式基本语法："><a href="#正则表达式基本语法：" class="headerlink" title="正则表达式基本语法："></a>正则表达式基本语法：</h2><pre><code>界定符
+        <a id="more"></a>
+<h2 id="正则表达式基本语法："><a href="#正则表达式基本语法：" class="headerlink" title="正则表达式基本语法："></a>正则表达式基本语法：</h2><pre><code>界定符
 原子
 量词
 边界控制
@@ -498,8 +499,8 @@ m 换行匹配
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/06/php对象注入小结/" rel="prev" title="php对象注入小结">
-                php对象注入小结 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/12/06/php对象注入小结/" rel="prev" title="php对象注入">
+                php对象注入 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -600,7 +601,7 @@ m 换行匹配
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
@@ -669,9 +670,9 @@ m 换行匹配
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heartbeat"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Set3rnal</span>
 
