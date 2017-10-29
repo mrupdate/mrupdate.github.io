@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="0x00 TLS简述TLS(Thread Local Storage,线程局部存储)回调函数是是一种Windows为了解决一个进程中多个线程同时访问全局变量而提供的机制。TLS是各线程的独立的数据存储空间。使用TLS技术可在线程内部独立使用或修改进程的全局数据或静态数据。 TLS可以简单地由操作系统代为完成整个过程，也可以由用户自己编写控制信号量的函数。 每当程序创建/终止进程的线程时都会自动调">
+<meta name="description" content="TLS(Thread Local Storage,线程局部存储)回调函数是是一种Windows为了解决一个进程中多个线程同时访问全局变量而提供的机制。TLS是各线程的独立的数据存储空间。使用TLS技术可在线程内部独立使用或修改进程的全局数据或静态数据。">
 <meta name="keywords" content="Windows">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Windows TLS反调试">
 <meta property="og:url" content="http://www.set3rnal.xyz/2017/06/22/Windows TLS反调试/index.html">
 <meta property="og:site_name" content="0xsisrazz">
-<meta property="og:description" content="0x00 TLS简述TLS(Thread Local Storage,线程局部存储)回调函数是是一种Windows为了解决一个进程中多个线程同时访问全局变量而提供的机制。TLS是各线程的独立的数据存储空间。使用TLS技术可在线程内部独立使用或修改进程的全局数据或静态数据。 TLS可以简单地由操作系统代为完成整个过程，也可以由用户自己编写控制信号量的函数。 每当程序创建/终止进程的线程时都会自动调">
+<meta property="og:description" content="TLS(Thread Local Storage,线程局部存储)回调函数是是一种Windows为了解决一个进程中多个线程同时访问全局变量而提供的机制。TLS是各线程的独立的数据存储空间。使用TLS技术可在线程内部独立使用或修改进程的全局数据或静态数据。">
 <meta property="og:image" content="https://i.imgur.com/raFLcqe.png">
 <meta property="og:image" content="https://i.imgur.com/R84b6Co.png">
 <meta property="og:image" content="https://i.imgur.com/lEcgZsa.png">
-<meta property="og:updated_time" content="2017-10-29T13:22:34.104Z">
+<meta property="og:updated_time" content="2017-10-29T23:47:14.926Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows TLS反调试">
-<meta name="twitter:description" content="0x00 TLS简述TLS(Thread Local Storage,线程局部存储)回调函数是是一种Windows为了解决一个进程中多个线程同时访问全局变量而提供的机制。TLS是各线程的独立的数据存储空间。使用TLS技术可在线程内部独立使用或修改进程的全局数据或静态数据。 TLS可以简单地由操作系统代为完成整个过程，也可以由用户自己编写控制信号量的函数。 每当程序创建/终止进程的线程时都会自动调">
+<meta name="twitter:description" content="TLS(Thread Local Storage,线程局部存储)回调函数是是一种Windows为了解决一个进程中多个线程同时访问全局变量而提供的机制。TLS是各线程的独立的数据存储空间。使用TLS技术可在线程内部独立使用或修改进程的全局数据或静态数据。">
 <meta name="twitter:image" content="https://i.imgur.com/raFLcqe.png">
 
 
@@ -324,9 +324,8 @@
       
 
       
-        <a id="more"></a>
-<h2 id="0x00-TLS简述"><a href="#0x00-TLS简述" class="headerlink" title="0x00 TLS简述"></a>0x00 TLS简述</h2><p>TLS(Thread Local Storage,线程局部存储)回调函数是是一种Windows为了解决一个进程中多个线程同时访问全局变量而提供的机制。TLS是各线程的独立的数据存储空间。使用TLS技术可在线程内部独立使用或修改进程的全局数据或静态数据。</p>
-<p>TLS可以简单地由操作系统代为完成整个过程，也可以由用户自己编写控制信号量的函数。</p>
+        <p>TLS(Thread Local Storage,线程局部存储)回调函数是是一种Windows为了解决一个进程中多个线程同时访问全局变量而提供的机制。TLS是各线程的独立的数据存储空间。使用TLS技术可在线程内部独立使用或修改进程的全局数据或静态数据。<br><a id="more"></a></p>
+<h2 id="0x00-TLS简述"><a href="#0x00-TLS简述" class="headerlink" title="0x00 TLS简述"></a>0x00 TLS简述</h2><p>TLS可以简单地由操作系统代为完成整个过程，也可以由用户自己编写控制信号量的函数。</p>
 <p>每当程序创建/终止进程的线程时都会自动调用的函数，其调用会先于EP代码，所以TLS回调函数可以用于反调试。</p>
 <h2 id="0x01-函数原型"><a href="#0x01-函数原型" class="headerlink" title="0x01 函数原型"></a>0x01 函数原型</h2><p>当程序员选择自己编写控制信号量的函数时，系统会调用由程序员编写的初始化函数完成信号量的初始化，且该过程必须在EP执行之前完成。</p>
 <p>PE头中，TLS也会占有一段空间</p>
