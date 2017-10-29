@@ -10,7 +10,7 @@
 <meta name="keywords" content="Web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php对象注入小结">
-<meta property="og:url" content="http://www.set3rnal.xyz/2016/12/06/12/index.html">
+<meta property="og:url" content="http://www.set3rnal.xyz/2016/12/06/php对象注入小结/index.html">
 <meta property="og:site_name" content="0xsisrazz">
 <meta property="og:description" content="php对象注入又叫做反序列化漏洞，同时对php的序列化与反序列化研究了好长时间，现在小结一下 0x00 序列化与反序列化简介 string serialize ( mixed $value )  php序列化函数serialize()将对象或数组转变为字符串，包含了表示 value 的字节流，便于存储或传参。unserialize()则是将序列化好的字符串作输入，返回数组或对象。序列化的危害就在于">
 <meta property="og:image" content="http://i.imgur.com/VbSO53D.png">
@@ -87,16 +87,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://www.set3rnal.xyz/2016/12/06/12/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://www.set3rnal.xyz/2016/12/06/12/&text=php对象注入小结"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://www.set3rnal.xyz/2016/12/06/12/&title=php对象注入小结"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://www.set3rnal.xyz/2016/12/06/12/&is_video=false&description=php对象注入小结"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=php对象注入小结&body=Check out this article: http://www.set3rnal.xyz/2016/12/06/12/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://www.set3rnal.xyz/2016/12/06/12/&title=php对象注入小结"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://www.set3rnal.xyz/2016/12/06/12/&title=php对象注入小结"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://www.set3rnal.xyz/2016/12/06/12/&title=php对象注入小结"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://www.set3rnal.xyz/2016/12/06/12/&title=php对象注入小结"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://www.set3rnal.xyz/2016/12/06/12/&name=php对象注入小结&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&text=php对象注入小结"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&title=php对象注入小结"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&is_video=false&description=php对象注入小结"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=php对象注入小结&body=Check out this article: http://www.set3rnal.xyz/2016/12/06/php对象注入小结/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&title=php对象注入小结"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&title=php对象注入小结"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&title=php对象注入小结"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&title=php对象注入小结"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&name=php对象注入小结&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -220,16 +220,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://www.set3rnal.xyz/2016/12/06/12/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://www.set3rnal.xyz/2016/12/06/12/&text=php对象注入小结"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://www.set3rnal.xyz/2016/12/06/12/&title=php对象注入小结"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://www.set3rnal.xyz/2016/12/06/12/&is_video=false&description=php对象注入小结"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=php对象注入小结&body=Check out this article: http://www.set3rnal.xyz/2016/12/06/12/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://www.set3rnal.xyz/2016/12/06/12/&title=php对象注入小结"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://www.set3rnal.xyz/2016/12/06/12/&title=php对象注入小结"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://www.set3rnal.xyz/2016/12/06/12/&title=php对象注入小结"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://www.set3rnal.xyz/2016/12/06/12/&title=php对象注入小结"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://www.set3rnal.xyz/2016/12/06/12/&name=php对象注入小结&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&text=php对象注入小结"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&title=php对象注入小结"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&is_video=false&description=php对象注入小结"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=php对象注入小结&body=Check out this article: http://www.set3rnal.xyz/2016/12/06/php对象注入小结/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&title=php对象注入小结"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&title=php对象注入小结"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&title=php对象注入小结"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&title=php对象注入小结"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://www.set3rnal.xyz/2016/12/06/php对象注入小结/&name=php对象注入小结&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
