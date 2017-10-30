@@ -163,18 +163,6 @@
 <p><img src="https://i.imgur.com/OaBTOGo.png" alt=""><br>可以看到0x00401350处就是SEH结构了<br>关于__except_handler3可以查看这篇文章<a href="https://www.microsoft.com/msj/0197/exception/exception.aspx" target="_blank" rel="external">https://www.microsoft.com/msj/0197/exception/exception.aspx</a></p>
 ]]></content>
       
-        <categories>
-            
-            <category> Windows </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Windows </tag>
-            
-        </tags>
         
     </entry>
     
@@ -198,18 +186,6 @@
 <p>Refer：<br><a href="https://le4f.net/post/post/tls-anti-debug" title="https://le4f.net/post/post/tls-anti-debug" target="_blank" rel="external">https://le4f.net/post/post/tls-anti-debug</a></p>
 ]]></content>
       
-        <categories>
-            
-            <category> Windows </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Windows </tag>
-            
-        </tags>
         
     </entry>
     
@@ -242,12 +218,6 @@
 ]]></content>
       
         
-        <tags>
-            
-            <tag> Android </tag>
-            
-        </tags>
-        
     </entry>
     
     <entry>
@@ -279,12 +249,6 @@ int pipe(int fd[2]);</code><br>fd[0]用于读出数据，读的时候必须关�
 ]]></content>
       
         
-        <tags>
-            
-            <tag> pwn </tag>
-            
-        </tags>
-        
     </entry>
     
     <entry>
@@ -314,12 +278,6 @@ bk=shellcode_addr
 <p><img src="https://i.imgur.com/8Lu0UJE.png" alt=""><br>这样再执行free函数的时候就会跳转到shellcode</p>
 ]]></content>
       
-        
-        <tags>
-            
-            <tag> Binary </tag>
-            
-        </tags>
         
     </entry>
     
@@ -377,12 +335,6 @@ bk=shellcode_addr
 <p><img src="http://i.imgur.com/EftYJbd.png" alt=""></p>
 ]]></content>
       
-        
-        <tags>
-            
-            <tag> Web </tag>
-            
-        </tags>
         
     </entry>
     
@@ -530,12 +482,6 @@ m 换行匹配
 <p>参考：<br><a href="http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html" target="_blank" rel="external">http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html</a></p>
 ]]></content>
       
-        
-        <tags>
-            
-            <tag> 正则表达式 </tag>
-            
-        </tags>
         
     </entry>
     
