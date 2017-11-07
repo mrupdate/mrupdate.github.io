@@ -226,7 +226,11 @@
 <p>首先反编译</p>
 <p><code>java -jar apktool_2.0.0.jar d -d flag.apk -o out/</code></p>
 <p>进入out文件中，更改AndroidManifest.xml中的android:debuggable=”true”<br><img src="https://i.imgur.com/Bzj4CDz.png" alt=""></p>
-<p>修改好之后编译<br><code>java -jar apktool_2.0.0.jar b -d out/ -o flag.apk</code><br>就可以了</p>
+<p>修改好之后编译<br><code>java -jar apktool_2.0.0.jar b -o new_flag.apk</code></p>
+<p>之后进行签名<br>生成签名：</p>
+<p><code>keytool -genkey -v -keystore androidse.keystore(名字随便起) -alias androidsekey(别名，任意) -keyalg RSA -keysize 2048 -validity 365</code></p>
+<p><code>jarsigner -verbose -keystore mykeystore -signedjar new_flag_signed.apk(目标名字) new_flag.apk(要签名的apk) androidsekey(别名)</code></p>
+<p>就可以了</p>
 ]]></content>
       
         
