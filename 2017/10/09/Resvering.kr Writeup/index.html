@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="Re," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="0xsisrazz" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="记录刷棒子国的Resvering.kr题目的解题思路">
+<meta name="keywords" content="Re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Resvering.kr Writeup">
+<meta property="og:url" content="http://www.set3rnal.xyz/2017/10/09/Resvering.kr Writeup/index.html">
+<meta property="og:site_name" content="0xsisrazz">
+<meta property="og:description" content="记录刷棒子国的Resvering.kr题目的解题思路">
+<meta property="og:image" content="https://i.imgur.com/aF2IN7e.png">
+<meta property="og:image" content="https://i.imgur.com/pDvlsB7.png">
+<meta property="og:image" content="https://i.imgur.com/7ECZHvy.png">
+<meta property="og:image" content="https://i.imgur.com/0Z2afM8.png">
+<meta property="og:image" content="https://i.imgur.com/taYT2J9.png">
+<meta property="og:image" content="https://i.imgur.com/oc3QMFi.png">
+<meta property="og:image" content="https://i.imgur.com/XmSCU8b.png">
+<meta property="og:image" content="https://i.imgur.com/QKM1FJe.png">
+<meta property="og:updated_time" content="2017-11-09T10:29:02.175Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Resvering.kr Writeup">
+<meta name="twitter:description" content="记录刷棒子国的Resvering.kr题目的解题思路">
+<meta name="twitter:image" content="https://i.imgur.com/aF2IN7e.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"right","offset":30,"b2t":true,"scrollpercent":"flase","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.set3rnal.xyz/2017/10/09/Resvering.kr Writeup/"/>
+
+
+
+
+
+  <title>Resvering.kr Writeup | 0xsisrazz</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">0xsisrazz</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-乌云镜像">
+          <a href="http://drops.isisia.xyz" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wheelchair-alt"></i> <br />
+            
+            乌云镜像
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.set3rnal.xyz/2017/10/09/Resvering.kr Writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Set3rnal">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0xsisrazz">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Resvering.kr Writeup</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T09:17:09+08:00">
+                2017-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/09/Resvering.kr Writeup/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/10/09/Resvering.kr Writeup/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录刷棒子国的Resvering.kr题目的解题思路<br><a id="more"></a></p>
+<h2 id="0x03-Easy-Unpack"><a href="#0x03-Easy-Unpack" class="headerlink" title="0x03 Easy Unpack"></a>0x03 Easy Unpack</h2><p>使用PEID检测发现有壳，题目要求找出OEP，所以手动脱壳。<br>OD载入，这里使用单步调试法进行脱壳，F8一直往下走，碰到向上或者循环 在下一条指令下断点，F9运行<br>碰到CALL指令 F7进入，直到进入OEP</p>
+<p><img src="https://i.imgur.com/aF2IN7e.png" alt=""></p>
+<p>flag：0x401150</p>
+<h2 id="0x05-Replace"><a href="#0x05-Replace" class="headerlink" title="0x05 Replace"></a>0x05 Replace</h2><p>打开测试，只能输入数字。而且错误后程序崩溃。<br>所有OD载入搜索name-&gt;GetDlgItemInt 设置断点，运行，输入1111，点击check。</p>
+<p><img src="https://i.imgur.com/pDvlsB7.png" alt=""><br>看到ASCII编码的字符串 Correct!出现在下面<br>接着单步调试，直接<code>Alt+F9</code>回到用户模式，再F8往下走。<br><img src="https://i.imgur.com/7ECZHvy.png" alt=""></p>
+<p>当运行到0x004046A9程序崩溃。F7步入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">0040466F   $  C600 90       mov byte ptr ds:[eax],0x90</div><div class="line">00404672   ?  C3            retn</div><div class="line">00404673   ?  0081 05D08440 add byte ptr ds:[ecx+0x4084D005],al</div></pre></td></tr></table></figure></p>
+<p>看到程序把eax的值赋值了0x90，而0x90就是nop指令啊，我们可以猜测，由于我们的输入错误，程序将一个不知道的地址(我们输入的)执行了NOP指令，所以程序崩溃。</p>
+<p>现在的eax是什么？ </p>
+<p>刚刚说到 程序刚跳转到0x00404690时，先<code>mov dword ptr ds:[0x4084D0],eax</code>将输入的值赋给0x4084D0 然后call了0x0040466F，跟进<br><img src="https://i.imgur.com/0Z2afM8.png" alt=""><br>这有一个db 81，不明所以，OD中右键Analysis-&gt;Remove analysis from this module</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">0040466F   $  E8 06000000   call Replace.0040467A</div><div class="line">00404674      8105 D0844000&gt;add dword ptr ds:[0x4084D0],0x601605C7</div><div class="line">0040467E      40            inc eax</div><div class="line">0040467F   ?  00EB          add bl,ch</div><div class="line">00404681   ?  60            pushad</div><div class="line">00404682   ?  90            nop</div><div class="line">00404683   ?  61            popad</div><div class="line">00404684   .  E8 00000000   call Replace.00404689</div><div class="line">00404689  /$  FF05 D0844000 inc dword ptr ds:[0x4084D0]</div><div class="line">0040468F  \.  C3            retn</div><div class="line">00404690    A1 D0844000     mov eax,dword ptr ds:[0x4084D0]</div><div class="line">00404695    68 9F464000     push Replace.0040469F</div><div class="line">0040469A    E8 EAFFFFFF     call Replace.00404689</div></pre></td></tr></table></figure>
+<p>这段代码把ds:[0x4084D0]里面的值加了0x601605C7，之后这些指令似乎没作用，到0x00404689完成自增，retn，再自增，函数返回。接着执行0x404690 所以我们输入的值经过转换 存为eax。然后程序有调用了一次自增。<br>回过头来看，我们想办法把00401071处的jmp nop掉就成功了，所以最终eax为0x601605C7+[输入]+1+1+1+1；所以flag就是0x00401071-1-1-1-1-0x601605CB=FFFFFFFFA02A0AA6；截取dword:A02A0AA6<br>flag：2687109798</p>
+<h2 id="0x08-Direct3D-FPS"><a href="#0x08-Direct3D-FPS" class="headerlink" title="0x08 Direct3D_FPS"></a>0x08 Direct3D_FPS</h2><p>IDA打开查找字符串，发现除了Game Over之外，只有一个Game Clear。<br>进入该函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">.text:004039C5 loc_4039C5:                             ; CODE XREF: sub_4039C0+14j</div><div class="line">.text:004039C5                 cmp     dword ptr [eax], 1</div><div class="line">.text:004039C8                 jz      short locret_403A01</div><div class="line">.text:004039CA                 add     eax, 210h</div><div class="line">.text:004039CF                 cmp     eax, offset unk_40F8B4</div><div class="line">.text:004039D4                 jl      short loc_4039C5</div><div class="line">.text:004039D6                 mov     eax, hWnd</div><div class="line">.text:004039DB                 push    40h             ; uType</div><div class="line">.text:004039DD                 push    offset aGameClear ; &quot;Game Clear!&quot;</div><div class="line">.text:004039E2                 push    offset byte_407028 ; lpText</div><div class="line">.text:004039E7                 push    eax             ; hWnd</div><div class="line">.text:004039E8                 call    ds:MessageBoxA</div><div class="line">.text:004039EE                 mov     ecx, hWnd</div><div class="line">.text:004039F4                 push    0               ; lParam</div><div class="line">.text:004039F6                 push    0               ; wParam</div><div class="line">.text:004039F8                 push    2               ; Msg</div><div class="line">.text:004039FA                 push    ecx             ; hWnd</div><div class="line">.text:004039FB                 call    ds:SendMessageA</div><div class="line">.text:00403A01</div><div class="line">.text:00403A01 locret_403A01:                          ; CODE XREF: sub_4039C0+8j</div></pre></td></tr></table></figure>
+<p>看到 lpText的byte_407028比较特殊。交叉引用查看：</p>
+<p><img src="https://i.imgur.com/taYT2J9.png" alt=""></p>
+<p>看到有个异或算法，进去看一看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">int sub_403400()</div><div class="line">&#123;</div><div class="line">  int result; // eax@1</div><div class="line">  int v2; // ecx@2</div><div class="line">  int v3; // edx@2</div><div class="line"></div><div class="line">  result = sub_403440();</div><div class="line">  if ( result != -1 )</div><div class="line">  &#123;</div><div class="line">    v2 = 132 * result;</div><div class="line">    v3 = dword_409190[132 * result];</div><div class="line">    if ( v3 &gt; 0 )</div><div class="line">    &#123;</div><div class="line">      dword_409190[v2] = v3 - 2;</div><div class="line">    &#125;</div><div class="line">    else</div><div class="line">    &#123;</div><div class="line">      dword_409194[v2] = 0;</div><div class="line">      *(&amp;byte_407028 + result) ^= byte_409184[v2 * 4];</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">.text:00403400 sub_403400      proc near               ; CODE XREF: WinMain(x,x,x,x)+750p</div><div class="line">.text:00403400                 push    ecx</div><div class="line">.text:00403401                 call    sub_403440</div><div class="line">.text:00403406                 cmp     eax, 0FFFFFFFFh</div><div class="line">.text:00403409                 jz      short loc_40343E</div><div class="line">.text:0040340B                 mov     ecx, eax</div><div class="line">.text:0040340D                 imul    ecx, 210h</div><div class="line">.text:00403413                 mov     edx, dword_409190[ecx]</div><div class="line">.text:00403419                 test    edx, edx</div><div class="line">.text:0040341B                 jg      short loc_403435</div><div class="line">.text:0040341D                 mov     dword_409194[ecx], 0</div><div class="line">.text:00403427                 mov     cl, byte_409184[ecx]</div><div class="line">.text:0040342D                 xor     byte_407028[eax], cl</div><div class="line">.text:00403433                 pop     ecx</div><div class="line">.text:00403434                 retn</div></pre></td></tr></table></figure>
+<p>可以得知：byte_407028[i] ^= byte_409184[528<em>4]<br>OD载入 动态调试查看这个byte_409184 也就是cl是什么<br><img src="https://i.imgur.com/oc3QMFi.png" alt=""><br>调试几次 可以看到 cl是0x0, 0x4, 0x8, 0xC 变化的。即i</em>4<br>利用脚本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">a = [67, 107, 102, 107, 98, 117, 108, 105, 76, 69, 92, 69, 95, 90, 70, 28, 7, 37, 37, 41, 112, 23, 52, 57, 1, 22, 73, 76, 32, 21, 11, 15, 247, 235, 250, 232, 176, 253, 235, 188, 244, 204, 218, 159, 245, 240, 232, 206, 240, 169]</div><div class="line">p = &apos;&apos;</div><div class="line">for i in xrange(len(a)):</div><div class="line">	p += chr(a[i] ^ (i * 4))</div><div class="line">print p</div><div class="line"></div><div class="line">Congratulation~ Game Clear! Password is Thr3EDPr0m</div></pre></td></tr></table></figure></p>
+<p>flag:Thr3EDPr0m</p>
+<h2 id="0x09-Ransomware"><a href="#0x09-Ransomware" class="headerlink" title="0x09 Ransomware"></a>0x09 Ransomware</h2><p>拿到程序，查壳后发现是UPX加壳，简单脱壳不解释，然后IDA反编译，尝试F5发现很慢，<br><img src="https://i.imgur.com/XmSCU8b.png" alt=""><br>看到main函数有很多nop花指令，这应该是造成ida反编译缓慢的原因，写脚本去除这些指令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">p = open(&apos;run_unpack.exe&apos;,&apos;rb&apos;).read()</div><div class="line">p = p.replace(&apos;\x60\x61\x90\x50\x58\x53\x5b&apos;,&apos;\x90\x90\x90\x90\x90\x90\x90&apos;)</div><div class="line">open(&apos;run_nop.exe&apos;,&apos;wb&apos;).write(p)</div></pre></td></tr></table></figure></p>
+<p>接着ida反编译，可以看到加密函数</p>
+<p><img src="https://i.imgur.com/QKM1FJe.png" alt=""></p>
+<p>加密函数就是将file文件的每个字节异或key的每个字节，然后~按位取反，由于题目提示file文件原来是exe，所以利用一些固定格式的PE头就可以得到key  这里利用This program cannot be run in DOS mode，然后找到加密后的file对应的密文解密<br>脚本如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">a=&apos;C7F2E2FFAFE3ECE9FBE5FBE1ACF0FBE5E2E0E7BEE4F9B7E8F9E2B3F3E5ACCBDCCDA6F1F8FEE9&apos;.decode(&apos;hex&apos;)</div><div class="line">b=&apos;This program cannot be run in DOS mode&apos;</div><div class="line">key=&apos;&apos;</div><div class="line">a = list(a)</div><div class="line">b = list(b)</div><div class="line">for i in range(len(a)):</div><div class="line">    a[i] = (~ord(a[i]))&amp;255</div><div class="line">    key += chr(ord(b[i])^a[i])</div><div class="line">print key</div></pre></td></tr></table></figure></p>
+<p>得到key:letsplaychess  利用密文解密<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">c = open(&apos;file&apos;,&apos;rb&apos;).read()</div><div class="line">d=&apos;&apos;</div><div class="line">key = &apos;letsplaychess&apos;</div><div class="line">len = len(key)</div><div class="line">for i in range(len(c)):</div><div class="line">    d += chr(ord(key[i%len])^(~ord(c[i]))&amp;255)</div><div class="line">open(&apos;file.exe&apos;,&apos;wb&apos;).write(d)</div></pre></td></tr></table></figure></p>
+<p>flag: Colle System</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Re/" rel="tag"># Re</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/22/Windows TLS反调试/" rel="next" title="Windows TLS反调试">
+                <i class="fa fa-chevron-left"></i> Windows TLS反调试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Set3rnal" />
+            
+              <p class="site-author-name" itemprop="name">Set3rnal</p>
+              <p class="site-description motion-element" itemprop="description">勿忘初心</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/mrupdate" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:zhangmenrenhh@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3517137212" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-Easy-Unpack"><span class="nav-number">1.</span> <span class="nav-text">0x03 Easy Unpack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-Replace"><span class="nav-number">2.</span> <span class="nav-text">0x05 Replace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x08-Direct3D-FPS"><span class="nav-number">3.</span> <span class="nav-text">0x08 Direct3D_FPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x09-Ransomware"><span class="nav-number">4.</span> <span class="nav-text">0x09 Ransomware</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Set3rnal</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://0xsisrazz.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://www.set3rnal.xyz/2017/10/09/Resvering.kr Writeup/';
+          this.page.identifier = '2017/10/09/Resvering.kr Writeup/';
+          this.page.title = 'Resvering.kr Writeup';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://0xsisrazz.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
