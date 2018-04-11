@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>0xsisrazz</title>
+  <title>0xrazz</title>
   
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://www.set3rnal.xyz/"/>
+  <link href="https://mrupdate.github.io/"/>
   <updated>2017-11-10T10:33:40.398Z</updated>
-  <id>http://www.set3rnal.xyz/</id>
+  <id>https://mrupdate.github.io/</id>
   
   <author>
     <name>Set3rnal</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Resvering.kr Writeup</title>
-    <link href="http://www.set3rnal.xyz/2017/10/09/Resvering.kr%20Writeup/"/>
-    <id>http://www.set3rnal.xyz/2017/10/09/Resvering.kr Writeup/</id>
+    <link href="https://mrupdate.github.io/2017/10/09/Resvering.kr%20Writeup/"/>
+    <id>https://mrupdate.github.io/2017/10/09/Resvering.kr Writeup/</id>
     <published>2017-10-09T01:17:09.000Z</published>
     <updated>2017-11-10T10:33:40.398Z</updated>
     
@@ -32,14 +32,14 @@
     </summary>
     
     
-      <category term="Re" scheme="http://www.set3rnal.xyz/tags/Re/"/>
+      <category term="Re" scheme="https://mrupdate.github.io/tags/Re/"/>
     
   </entry>
   
   <entry>
     <title>Windows TLS反调试</title>
-    <link href="http://www.set3rnal.xyz/2017/06/22/Windows%20TLS%E5%8F%8D%E8%B0%83%E8%AF%95/"/>
-    <id>http://www.set3rnal.xyz/2017/06/22/Windows TLS反调试/</id>
+    <link href="https://mrupdate.github.io/2017/06/22/Windows%20TLS%E5%8F%8D%E8%B0%83%E8%AF%95/"/>
+    <id>https://mrupdate.github.io/2017/06/22/Windows TLS反调试/</id>
     <published>2017-06-22T06:47:15.000Z</published>
     <updated>2017-10-30T00:20:26.434Z</updated>
     
@@ -52,14 +52,14 @@
     </summary>
     
     
-      <category term="Windows" scheme="http://www.set3rnal.xyz/tags/Windows/"/>
+      <category term="Windows" scheme="https://mrupdate.github.io/tags/Windows/"/>
     
   </entry>
   
   <entry>
     <title>IDEA动态调试smali</title>
-    <link href="http://www.set3rnal.xyz/2017/03/22/IDEA%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95smali/"/>
-    <id>http://www.set3rnal.xyz/2017/03/22/IDEA动态调试smali/</id>
+    <link href="https://mrupdate.github.io/2017/03/22/IDEA%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95smali/"/>
+    <id>https://mrupdate.github.io/2017/03/22/IDEA动态调试smali/</id>
     <published>2017-03-22T08:50:25.000Z</published>
     <updated>2017-11-07T07:09:39.460Z</updated>
     
@@ -72,14 +72,14 @@
     </summary>
     
     
-      <category term="Android" scheme="http://www.set3rnal.xyz/tags/Android/"/>
+      <category term="Android" scheme="https://mrupdate.github.io/tags/Android/"/>
     
   </entry>
   
   <entry>
     <title>Pwnable.kr Toddler&#39;s Bottle Writeup</title>
-    <link href="http://www.set3rnal.xyz/2017/02/24/Pwnable.kr%20Toddler&#39;s%20Bottle%20Writeup/"/>
-    <id>http://www.set3rnal.xyz/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/</id>
+    <link href="https://mrupdate.github.io/2017/02/24/Pwnable.kr%20Toddler&#39;s%20Bottle%20Writeup/"/>
+    <id>https://mrupdate.github.io/2017/02/24/Pwnable.kr Toddler&#39;s Bottle Writeup/</id>
     <published>2017-02-24T02:59:27.000Z</published>
     <updated>2017-10-30T00:21:44.097Z</updated>
     
@@ -92,14 +92,14 @@
     </summary>
     
     
-      <category term="Pwn" scheme="http://www.set3rnal.xyz/tags/Pwn/"/>
+      <category term="Pwn" scheme="https://mrupdate.github.io/tags/Pwn/"/>
     
   </entry>
   
   <entry>
     <title>Dword Shoot</title>
-    <link href="http://www.set3rnal.xyz/2017/02/14/Dword%20Shoot/"/>
-    <id>http://www.set3rnal.xyz/2017/02/14/Dword Shoot/</id>
+    <link href="https://mrupdate.github.io/2017/02/14/Dword%20Shoot/"/>
+    <id>https://mrupdate.github.io/2017/02/14/Dword Shoot/</id>
     <published>2017-02-14T06:57:57.000Z</published>
     <updated>2017-10-30T00:20:11.353Z</updated>
     
@@ -112,14 +112,14 @@
     </summary>
     
     
-      <category term="Pwn" scheme="http://www.set3rnal.xyz/tags/Pwn/"/>
+      <category term="Pwn" scheme="https://mrupdate.github.io/tags/Pwn/"/>
     
   </entry>
   
   <entry>
     <title>Sql注入总结</title>
-    <link href="http://www.set3rnal.xyz/2016/12/11/Sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/"/>
-    <id>http://www.set3rnal.xyz/2016/12/11/Sql注入总结/</id>
+    <link href="https://mrupdate.github.io/2016/12/11/Sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/"/>
+    <id>https://mrupdate.github.io/2016/12/11/Sql注入总结/</id>
     <published>2016-12-11T08:06:23.000Z</published>
     <updated>2018-04-11T09:38:22.943Z</updated>
     
@@ -132,14 +132,14 @@
     </summary>
     
     
-      <category term="Web Sql注入" scheme="http://www.set3rnal.xyz/tags/Web-Sql%E6%B3%A8%E5%85%A5/"/>
+      <category term="Web Sql注入" scheme="https://mrupdate.github.io/tags/Web-Sql%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
   <entry>
     <title>php对象注入</title>
-    <link href="http://www.set3rnal.xyz/2016/12/06/php%E5%AF%B9%E8%B1%A1%E6%B3%A8%E5%85%A5%E5%B0%8F%E7%BB%93/"/>
-    <id>http://www.set3rnal.xyz/2016/12/06/php对象注入小结/</id>
+    <link href="https://mrupdate.github.io/2016/12/06/php%E5%AF%B9%E8%B1%A1%E6%B3%A8%E5%85%A5%E5%B0%8F%E7%BB%93/"/>
+    <id>https://mrupdate.github.io/2016/12/06/php对象注入小结/</id>
     <published>2016-12-06T02:55:43.000Z</published>
     <updated>2017-10-30T00:21:32.833Z</updated>
     
@@ -152,14 +152,14 @@
     </summary>
     
     
-      <category term="Web" scheme="http://www.set3rnal.xyz/tags/Web/"/>
+      <category term="Web" scheme="https://mrupdate.github.io/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>正则表达式笔记</title>
-    <link href="http://www.set3rnal.xyz/2016/12/02/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%AC%94%E8%AE%B0/"/>
-    <id>http://www.set3rnal.xyz/2016/12/02/正则表达式笔记/</id>
+    <link href="https://mrupdate.github.io/2016/12/02/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%AC%94%E8%AE%B0/"/>
+    <id>https://mrupdate.github.io/2016/12/02/正则表达式笔记/</id>
     <published>2016-12-02T05:42:01.000Z</published>
     <updated>2017-10-30T00:21:10.919Z</updated>
     
@@ -172,14 +172,14 @@
     </summary>
     
     
-      <category term="正则表达式" scheme="http://www.set3rnal.xyz/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+      <category term="正则表达式" scheme="https://mrupdate.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://www.set3rnal.xyz/2016/11/22/hello-world/"/>
-    <id>http://www.set3rnal.xyz/2016/11/22/hello-world/</id>
+    <link href="https://mrupdate.github.io/2016/11/22/hello-world/"/>
+    <id>https://mrupdate.github.io/2016/11/22/hello-world/</id>
     <published>2016-11-22T06:47:15.000Z</published>
     <updated>2017-10-22T08:38:16.129Z</updated>
     
